@@ -198,10 +198,12 @@ app.layout = html.Div(children=[navbar,dbc.Row(
                                                 ),
                                                 dbc.Col(
                                                     dcc.Graph(id ='spend-graph'),
-                                                    width =4
+                                                    width =3
                                                 ),
                                                 dbc.Col(dcc.Graph(id = 'time_series'),
-                                                        width = 4),
+                                                        width = 5),
+                                                
+                                                
                                                 dcc.Store(id = 'intermediate-value'),
                                                 dcc.Store(
                                                           
@@ -300,16 +302,16 @@ def update_correlation_figure(df):
 
 
 
-@app.callback(
-    Output(component_id='digital-score', component_property='value'),
-    Input(component_id='intermediate-value', component_property='data')
-)
+# @app.callback(
+#     Output(component_id='digital-score', component_property='value'),
+#     Input(component_id='intermediate-value', component_property='data')
+# )
 
-def update_digital(budget_optimised_json):
+# def update_digital(budget_optimised_json):
     
-    budget_optimised = json.loads(budget_optimised_json)
+#     budget_optimised = json.loads(budget_optimised_json)
     
-    return np.round(float(budget_optimised_json['score']),2)
+#     return np.round(float(budget_optimised_json['score']),2)
 
 
 # Navbar
@@ -327,5 +329,4 @@ def toggle_navbar_collapse(n, is_open):
 if __name__ == '__main__':
     app.run_server(debug = False)
         
-    simulated_data_df = pd.read_csv("data/de_simulated_data.csv")
-    simulated_data_df['date'] = pd.to_datetime(simulated_data_df['DATE'])
+    
