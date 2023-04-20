@@ -11,6 +11,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
+import statsmodels.api as sm
+
 
 simulated_data_df = pd.read_csv("data/de_simulated_data.csv")
 
@@ -128,7 +130,7 @@ x_train, x_test, y_train, y_test = train_test_split(X,
                                                     random_state = 0)
 
 
-# Model 
+# Model using scikitlearn
 
 pipeline_model = Pipeline([
                      ('lm', LinearRegression())]
@@ -146,7 +148,12 @@ r2_score(y_test, y_pred_test)
 mean_absolute_error(y_test, y_pred_test)
 np.sqrt(mean_absolute_error(y_test,y_pred_test))
 
+# Model using statsmodel
+cons = sm.add_constant(x_train)
 
+model_ols = sm.OLS(y_train, x_train).fit()
+
+print(model_ols.summary())
 # Coefficients to the model
 
 pipeline_model['lm'].coef_
