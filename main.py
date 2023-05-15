@@ -14,6 +14,11 @@ from sklearn.metrics import r2_score, mean_absolute_error
 import statsmodels.api as sm
 
 
+from models.models import model_summary_to_dataframe
+from models.models import adstock
+from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot
+
+
 simulated_data_df = pd.read_csv("data/de_simulated_data.csv")
 
 
@@ -28,39 +33,13 @@ simulated_data_df.columns = simulated_data_df.columns.str.lower()
 
 simulated_data_df['date'] = pd.to_datetime(simulated_data_df['date'])
 
-
-
-# Visualize Time Series Data ----
-simulated_data_df\
-    .melt(id_vars = "date")\
-        .pipe(px.line,
-              x = "date",
-              y = "value",
-              color = "variable",
-              facet_col = "variable",
-              facet_col_wrap = 3,
-              template = "plotly_dark")\
-                  .update_yaxes(matches = None)
-
-
-
-# Visualize Current Spend Profile ----
 media_spend_df = simulated_data_df\
     .filter(regex = '_s$', axis = 1)\
         .sum()\
             .to_frame()\
                 .reset_index()\
                     .set_axis(['media','spend_current'], axis = 1)
-                    
-                    
-media_spend_df\
-    .pipe(px.bar,
-          x = 'media',
-          y = 'spend_current',
-          color = 'media',
-          template = "plotly_dark"
-          )
-
+                 
 # Add/Remove Features for Modeling ----
 
 correlation_df = simulated_data_df\
@@ -68,39 +47,22 @@ correlation_df = simulated_data_df\
         .drop(["date","search_clicks_p","facebook_i"], axis = 1)
 
 
-# Correlations ----
 
-correlation_df\
-    .corr()\
-        .pipe(sns.heatmap,
-              annot =True)
+# Visualize Time Series Data ----
 
+time_series_chart(simulated_data_df)
 
+# Visualize Current Spend Profile ----
+
+visualise_media_spend(media_spend_df)
+                    
+# Visualise Correlations ----
+corelation_plot(correlation_df)
 
 
 # STEP 2.0 MODELING WITH ADSTOCK ----
 
 # Basic Adstock Model ----
-
-def adstock(series, rate):
-    """_summary_
-
-    Args:
-        series (_type_): _description_
-        rate (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    tt = np.empty(len(series))
-    for i in range(1, len(series)):
-        tt[i] = series[i] + series[i-1]*rate
-        
-    tt_series = pd.Series(tt, index = series.index)
-    
-    tt_series.name = "adstock_" + str(series.name)
-    return tt_series
-
 
 adstock_tv_s = adstock(correlation_df.tv_s, 0.5)
 adstock_ooh_s = adstock(correlation_df.ooh_s, 0.5)
@@ -130,6 +92,18 @@ x_train, x_test, y_train, y_test = train_test_split(X,
                                                     random_state = 0)
 
 
+# Model using statsmodel
+cons = sm.add_constant(x_train)
+
+model_ols = sm.OLS(y_train, x_train).fit()
+
+print(model_ols.summary())
+
+output_summary_stats = model_summary_to_dataframe(model_ols)    
+    
+    
+
+
 # Model using scikitlearn
 
 pipeline_model = Pipeline([
@@ -148,12 +122,12 @@ r2_score(y_test, y_pred_test)
 mean_absolute_error(y_test, y_pred_test)
 np.sqrt(mean_absolute_error(y_test,y_pred_test))
 
-# Model using statsmodel
-cons = sm.add_constant(x_train)
 
-model_ols = sm.OLS(y_train, x_train).fit()
 
-print(model_ols.summary())
+
+    
+
+
 # Coefficients to the model
 
 pipeline_model['lm'].coef_
