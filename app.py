@@ -9,131 +9,45 @@ from dash import Dash
 
 import dash_daq as daq
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import pathlib
 from joblib import load
 import json
 
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import r2_score, mean_absolute_error
+import statsmodels.api as sm
+
+from models.models import model_summary_to_dataframe
+from models.models import adstock
+from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot
+
+
 # Data load
 
 simulated_data_df = pd.read_csv("data/de_simulated_data.csv")
-simulated_data_df['date'] = pd.to_datetime(simulated_data_df['DATE'])    
-    
-    
+
+simulated_data_df.columns = simulated_data_df.columns.str.lower()
+simulated_data_df['date'] = pd.to_datetime(simulated_data_df['date'])   
+ 
+correlation_df = simulated_data_df\
+    .assign(date_month = lambda x:x['date'].dt.month_name())\
+        .drop(["date","search_clicks_p","facebook_i"], axis = 1)
+
+
+
 # APP SETUP
 external_stylesheets = [dbc.themes.CYBORG]
 app = Dash(__name__,
            external_stylesheets=external_stylesheets)
 
-PLOT_BACKGROUND = 'rgba(0,0,0,0)'
-PLOT_FONT_COLOR = 'white'
-
-# PATHS
-
-BASE_PATH =pathlib.Path(__file__).parent.resolve()
-
-ART_PATH = BASE_PATH.joinpath("artefacts").resolve()
-
-# ARTEFACTS
-
-best_model = load(ART_PATH.joinpath("best_model"))
-
-X_Train = load(ART_PATH.joinpath("X_train"))
-
-media_spend_df = load(ART_PATH.joinpath("media_spend_df"))
-
-# FUNCTIONS (make them modular later on)
-
-def generate_grid(size = 100):
-        
-    rng = np.random.default_rng(123)
-    size = 100
-    budget_grid_df = pd.DataFrame(dict(
-        adstock_tv_s = rng.uniform(0, 1, size = size),
-        adstock_ooh_s = rng.uniform(0 , 1, size = size),
-        adstock_print_s = rng.uniform(0 , 1, size = size),
-        adstock_search_s = rng.uniform(0, 1, size  = size),
-        adstock_facebook_s = rng.uniform(0, 1, size = size)
-        
-    ))
-    return budget_grid_df
 
 
-
-def optimize_budget(df, 
-                    grid, 
-                    media_spend,
-                    verbose = True):
-    
-    X_train = df
-    budget_grid_df = grid
-    media_spend_df = media_spend
-    
-    best_budget = dict(
-        rebalancing_coef = None,
-        media_spend_rebal = None,
-        score = None
-    )
-    
-    for i , row in enumerate(budget_grid_df.index):
-        
-        # scale the randome budget mix
-        budget_scaled = budget_grid_df.loc[i,:]/np.sum(budget_grid_df.loc[i,:])
-        
-        # create rebalancing coefficients
-        
-        rebalancing_coef_df = budget_scaled\
-            .to_frame()\
-                .reset_index()\
-                    .set_axis(['name','value'], axis = 1)
-       
-    # Rebalance adstock
-    
-    X_train_adstock = X_train[X_train.columns[X_train.columns.str.startswith('adstock_')]] 
-    
-    X_train_not_adstock = X_train[X_train.columns[~X_train.columns.str.startswith('adstock_')]]
-    
-    X_train_adstock_rebal = X_train_adstock.copy()
-    
-    X_train_adstock_rebal.sum(axis = 1)
-    
-    
-    for i, col in enumerate(X_train_adstock_rebal.columns):
-        X_train_adstock_rebal[col] = X_train_adstock_rebal.sum(axis = 1) * rebalancing_coef_df['value'][i]
-        
-    
-    X_train_rebal = pd.concat([X_train_adstock_rebal, X_train_not_adstock], axis = 1)
-    
-    # Make Predictions
-    predicted_revenue_current = best_model['model'][0].predict(X_train).sum()
-    
-    predicted_revenue_new = best_model['model'][0].predict(X_train_rebal).sum()
-    
-    score = predicted_revenue_new/predicted_revenue_current
-    
-    # Media spend rebalanced
-    
-    total_current_spend = media_spend_df['spend_current'].sum()
-    
-    media_spend_rebalanced_df = media_spend_df.copy()
-    
-    media_spend_rebalanced_df['spend_new'] = total_current_spend * (rebalancing_coef_df['value'])
-    
-    if best_budget['score'] is None or score > best_budget['score']:
-        best_budget['rebalancing_coef'] = rebalancing_coef_df,
-        best_budget['media_spend_rebal'] = media_spend_rebalanced_df
-        best_budget['score'] = score
-        
-        if verbose:
-            print("New Best Budget:")
-            print(best_budget)
-            print("\n")
-            
-    if verbose:
-        print("Done!")
-    
-    return best_budget
 
 # APP
 navbar = dbc.Navbar(
@@ -152,178 +66,191 @@ navbar = dbc.Navbar(
           )
 
 
-app.layout = html.Div(children=[navbar,dbc.Row(
-                                               [
-                                                dbc.Col(
-                                                [html.H3(children = 'Welcome to MMM Optimisation dashboard'),
-                                                html.Div(
-                                                    id = "intro",
-                                                    children = "Improve Estimated Revenue by Optimising media channel spend and budget.",
-                                                ),
-                                                html.Br(),
-                                                html.Hr(),
-                                                html.H5("Generate Random Media Spend Portfolios"),
-                                                html.P("Increase the number of media portfolios generated to improve the optimisation results"),
-                                                dcc.Slider(
-                                                    id = "budget-size",
-                                                    min = 1,
-                                                    max = 5000,
-                                                    step = 10,
-                                                    marks = {
-                                                        1:"1",
-                                                        2000:"2000",
-                                                        3000: "3000",
-                                                        4000: "4000",
-                                                        5000: "5000"
-                                                    }, 
-                                                    value =10
-                                                ),
-                                                html.Hr(),
-                                                html.H5("Score"),
-                                                html.P("A score of 1.02 indicates a predicted 2% increase in Revenue by optimising the marketing budget"),
-                                                daq.LEDDisplay(
-                                                    id = "digital-score",
-                                                    value = 1.09,
-                                                    color = "#92e0d3",
-                                                    backgroundColor = "#1e2130",
-                                                    size =50
-                                                ),
-                                                html.Br(),
-                                                html.Button("Download Media Spend", id = "btn"),
-                                                dcc.Download(id = "download")
-                                                
-                                                ],
-                                                width = 3,
-                                                style = {'margin': '10px'}
-                                                ),
-                                                dbc.Col(
-                                                    dcc.Graph(id ='spend-graph'),
-                                                    width =3
-                                                ),
-                                                dbc.Col(dcc.Graph(id = 'time_series'),
-                                                        width = 5),
-                                                
-                                                
-                                                dcc.Store(id = 'intermediate-value'),
-                                                dcc.Store(
-                                                          
-                                                           id = 'time_series_slider'
-                                                           )
-                                              
-                                                ]
-                                               )
-                                ]
-                      )
 
+# Create a table with the model summary
+df = correlation_df
+adstock_tv_s = adstock(df.tv_s, 0.5)
+adstock_ooh_s = adstock(df.ooh_s, 0.5)
+
+adstock_print_s = adstock(df.print_s, 0.5)
+adstock_search_s = adstock(df.search_s, 0.5)
+
+adstock_facebook_s = adstock(df.facebook_s, 0.5)
+
+
+
+# prep fpr modelling
+
+X = pd.concat([adstock_tv_s, 
+            adstock_ooh_s, 
+            adstock_print_s,
+            adstock_search_s,
+            adstock_facebook_s,
+            df.competitor_sales_b,
+            pd.get_dummies(df.date_month)
+            ], axis = 1)
+
+Y = df.revenue
+x_train, x_test, y_train, y_test = train_test_split(X,
+                                                Y,
+                                                random_state = 42)
+
+melted_training_data = pd.melt(x_train.reset_index(),
+                                id_vars = 'index')
+
+cons = sm.add_constant(x_train)
+
+model_ols = sm.OLS(y_train, x_train).fit()
+
+
+# print(model_ols.summary())
+
+output_summary_stats = model_summary_to_dataframe(model_ols)    
+
+
+table = go.Figure(data=[go.Table(
+    header=dict(values=list(model_ols.summary().tables[0].data[0])),
+    cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])))
+)])
+
+key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
+                    .iloc[1:6,0:2]\
+                    .rename(columns={0:'variable', 1:'coefficient'})
+                    
+                    
+key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(str)
+key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(float)
+key_coefficients['variable'] = key_coefficients['variable'].astype(str)
+
+figure_2 = px.bar(key_coefficients,
+                  x = 'variable',
+                  y ='coefficient',
+                  color = 'variable')
+figure_2.update_layout(
+    title="Coefficeint Values",
+    xaxis_title="key variables",
+    yaxis_title="coefficients",
+    legend_title="Legend",
+    font=dict(
+        family="Courier New, monospace",
+        size=18,
+        color="RebeccaPurple"
+    )
+)
+
+
+app.layout = html.Div(children=[navbar,
+    html.H4("Optimising the marketing mix"),
+    # dbc.Row([dbc.Col(html.P("Select model:")),
+    dbc.Row([dcc.Dropdown(
+        id='dropdown',
+        options=["model_ols"],
+        value='model_ols',
+        clearable=True
+    )]),
+    dbc.Row([dbc.Col(dcc.Graph(id="graph")),
+    dbc.Col(dcc.Graph(figure = figure_2))]),
+    dcc.Graph(figure = table)
+])
 
 # Writing Callbacks
+
 @app.callback(
-   Output(component_id='intermediate-value',component_property='data'),
-   Input(component_id='budget-size', component_property='value')
+    Output(component_id="graph", component_property="figure"),
+    Input(component_id="dropdown", component_property="value")
 )
 
+def mod(df):
+    # Model using statsmodel
+    df = correlation_df
+    adstock_tv_s = adstock(df.tv_s, 0.5)
+    adstock_ooh_s = adstock(df.ooh_s, 0.5)
 
-def process_data(budget_size):
-    budget_grid_df = generate_grid(budget_size)
+    adstock_print_s = adstock(df.print_s, 0.5)
+    adstock_search_s = adstock(df.search_s, 0.5)
+
+    adstock_facebook_s = adstock(df.facebook_s, 0.5)
+
+
+
+    # prep fpr modelling
+
+    X = pd.concat([adstock_tv_s, 
+                adstock_ooh_s, 
+                adstock_print_s,
+                adstock_search_s,
+                adstock_facebook_s,
+                df.competitor_sales_b,
+                pd.get_dummies(df.date_month)
+                ], axis = 1)
+
+    Y = df.revenue
+    x_train, x_test, y_train, y_test = train_test_split(X,
+                                                    Y,
+                                                    random_state = 42)
     
-    budget_optimised = optimize_budget(
-        df = X_Train,
-        grid = budget_grid_df,
-        media_spend = media_spend_df,
-        verbose = True 
+    x_range = np.linspace(x_train.iloc[:,0].min(), x_train.iloc[:,0].max(), 156)
+
+    
+    
+    sm.add_constant(x_train)
+    sm.add_constant(x_test)
+    
+    model_ols = sm.OLS(y_train, x_train).fit()
+
+    y_pred = model_ols.predict(x_test)
+    
+    print(model_ols.summary())
+
+    output_summary_stats = model_summary_to_dataframe(model_ols)    
+    
+    
+    
+    fig = go.Figure([go.Scatter(x = x_train.iloc[:,0],
+                                y = y_train,
+                                mode ='markers',
+                                name = 'tv'
+                        
+                               ),
+                    go.Scatter(x = x_train.iloc[:,1],
+                                y = y_train,
+                                mode ='markers',
+                                name = 'ooh'
+                               ),
+                    go.Scatter(x = x_train.iloc[:,2],
+                                y = y_train,
+                                mode ='markers',
+                                name = 'print'
+                               ),
+                    go.Scatter(x = x_train.iloc[:,3],
+                                y = y_train,
+                                mode ='markers',
+                                name = 'search'
+                               ),
+                    go.Scatter(x = x_train.iloc[:,4],
+                                y = y_train,
+                                mode ='markers',
+                                name = 'facebook'
+                               ),
+                    go.Scatter(x = x_range,
+                               y = y_pred,
+                               name = 'regression fit')
+                    
+                    ]) 
+    fig.update_layout(
+    title="Key performance indicators",
+    xaxis_title="Variable spends",
+    yaxis_title="sales",
+    legend_title="Legend",
+    font=dict(
+        family="Courier New, monospace",
+        size=18,
+        color="RebeccaPurple"
     )
-    
-    budget_optimised_json = budget_optimised.copy()
-    
-    budget_optimised_json['rebalancing_coef'] = budget_optimised_json['rebalancing_coef'][0].to_json()
-    
-    budget_optimised_json['media_spend_rebal'] = budget_optimised_json['media_spend_rebal'].to_json()
-    
-    budget_optimised_json = json.dumps(budget_optimised_json)
-    
-    return budget_optimised_json
-    
-
-@app.callback(
-    Output(component_id='spend-graph', component_property='figure'),
-    Input(component_id='intermediate-value', component_property='data')
 )
-
-
-
-def update_figure(budget_optimised_json):
-    
-    budget_optimised = json.loads(budget_optimised_json)
-    
-    fig =pd.read_json(budget_optimised['media_spend_rebal'])\
-        .melt(
-            id_vars='media'
-        )\
-            .pipe(
-                px.bar,
-                x ='variable',
-                y = 'value',
-                color = 'media',
-                barmode = 'group',
-                template = 'plotly_dark'
-            )
+     
     return fig
 
-
-
-@app.callback(
-    Output(component_id='time_series', component_property='figure'),
-    Input(component_id='time_series_slider', component_property='data')
-)
-
-
-
-def update_correlation_figure(df):
-    
-    
-    df = simulated_data_df
-    
-    fig2 = df\
-            .melt(id_vars = "date")\
-                .pipe(px.line,
-                    x = "date",
-                    y = "value",
-                    color = "variable",
-                    facet_col = "variable",
-                    facet_col_wrap = 3,
-                    template = "plotly_dark")\
-                        .update_yaxes(matches = None)
-
-
-
-    return fig2
-
-
-
-
-
-# @app.callback(
-#     Output(component_id='digital-score', component_property='value'),
-#     Input(component_id='intermediate-value', component_property='data')
-# )
-
-# def update_digital(budget_optimised_json):
-    
-#     budget_optimised = json.loads(budget_optimised_json)
-    
-#     return np.round(float(budget_optimised_json['score']),2)
-
-
-# Navbar
-@app.callback(
-    Output("navbar-collapse", "is_open"),
-    [Input("navbar-toggler", "n_clicks")],
-    [State("navbar-collapse", "is_open")],
-)
-def toggle_navbar_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open
 
 
 if __name__ == '__main__':
