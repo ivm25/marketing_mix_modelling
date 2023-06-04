@@ -2,9 +2,9 @@
 
 import dash
 import dash_bootstrap_components as dbc
-import dash_html_components as html
+from dash import html
 from dash.dependencies import Input, Output, State
-import dash_core_components as dcc
+from dash import dcc
 from dash import Dash
 
 import dash_daq as daq
@@ -53,16 +53,16 @@ app = Dash(__name__,
 navbar = dbc.Navbar(
          [html.A(dbc.Row([dbc.Row(dbc.NavbarBrand("Marketing Mix Optimisation", className= "ml-2"))
                           ],
-                         align = "center",
-                         no_gutters=True)
+                         align = "center"
+                         )
                  ),
           dbc.NavbarToggler(id="navbar-toggler", n_clicks = 0),
           dbc.Collapse(
               id = "navbar-collapse", navbar = True, is_open = False
           )
           ], 
-         color = "dark",
-         dark = True
+        #  color = "dark",
+        #  dark = True
           )
 
 
@@ -113,8 +113,11 @@ table = go.Figure(data=[go.Table(
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])))
 )])
 
+table.update_layout(template = 'ggplot2')
+
+
 key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
-                    .iloc[1:6,0:2]\
+                    .iloc[1:7,0:2]\
                     .rename(columns={0:'variable', 1:'coefficient'})
                     
                     
@@ -125,30 +128,35 @@ key_coefficients['variable'] = key_coefficients['variable'].astype(str)
 figure_2 = px.bar(key_coefficients,
                   x = 'variable',
                   y ='coefficient',
-                  color = 'variable')
+                  color = 'coefficient'
+                  )
 figure_2.update_layout(
     title="Coefficeint Values",
     xaxis_title="key variables",
     yaxis_title="coefficients",
+    template = 'ggplot2',
     legend_title="Legend",
     font=dict(
         family="Courier New, monospace",
-        size=18,
+        size=14,
         color="RebeccaPurple"
     )
 )
+
+independent_vars = {'TV': correlation_df['tv_s'],
+                    'OOH':correlation_df['ooh_s']}
 
 
 app.layout = html.Div(children=[navbar,
     html.H4("Optimising the marketing mix"),
     # dbc.Row([dbc.Col(html.P("Select model:")),
-    dbc.Row([dcc.Dropdown(
+    dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
-        options=["model_ols"],
-        value='model_ols',
-        clearable=True
-    )]),
-    dbc.Row([dbc.Col(dcc.Graph(id="graph")),
+        options=list(correlation_df.columns),
+        value=correlation_df.columns[1]
+       
+    )),
+    dbc.Col(dcc.Graph(id="graph")),
     dbc.Col(dcc.Graph(figure = figure_2))]),
     dcc.Graph(figure = table)
 ])
@@ -160,91 +168,30 @@ app.layout = html.Div(children=[navbar,
     Input(component_id="dropdown", component_property="value")
 )
 
-def mod(df):
-    # Model using statsmodel
-    df = correlation_df
-    adstock_tv_s = adstock(df.tv_s, 0.5)
-    adstock_ooh_s = adstock(df.ooh_s, 0.5)
-
-    adstock_print_s = adstock(df.print_s, 0.5)
-    adstock_search_s = adstock(df.search_s, 0.5)
-
-    adstock_facebook_s = adstock(df.facebook_s, 0.5)
-
-
-
-    # prep fpr modelling
-
-    X = pd.concat([adstock_tv_s, 
-                adstock_ooh_s, 
-                adstock_print_s,
-                adstock_search_s,
-                adstock_facebook_s,
-                df.competitor_sales_b,
-                pd.get_dummies(df.date_month)
-                ], axis = 1)
-
-    Y = df.revenue
-    x_train, x_test, y_train, y_test = train_test_split(X,
-                                                    Y,
-                                                    random_state = 42)
+def mod(selected_col):
+    # scatter charts with linear fits
+    if selected_col is None:
+        selected_col = correlation_df.columns[1]
+   
     
-    x_range = np.linspace(x_train.iloc[:,0].min(), x_train.iloc[:,0].max(), 156)
+    fig = px.scatter(correlation_df,
+                     x = correlation_df[selected_col],
+                     y = 'revenue',
+                     trendline = 'ols',
+                     size = 'revenue',
+                     template = 'ggplot2',
+                     color = 'revenue')
+    
 
-    
-    
-    sm.add_constant(x_train)
-    sm.add_constant(x_test)
-    
-    model_ols = sm.OLS(y_train, x_train).fit()
-
-    y_pred = model_ols.predict(x_test)
-    
-    print(model_ols.summary())
-
-    output_summary_stats = model_summary_to_dataframe(model_ols)    
-    
-    
-    
-    fig = go.Figure([go.Scatter(x = x_train.iloc[:,0],
-                                y = y_train,
-                                mode ='markers',
-                                name = 'tv'
-                        
-                               ),
-                    go.Scatter(x = x_train.iloc[:,1],
-                                y = y_train,
-                                mode ='markers',
-                                name = 'ooh'
-                               ),
-                    go.Scatter(x = x_train.iloc[:,2],
-                                y = y_train,
-                                mode ='markers',
-                                name = 'print'
-                               ),
-                    go.Scatter(x = x_train.iloc[:,3],
-                                y = y_train,
-                                mode ='markers',
-                                name = 'search'
-                               ),
-                    go.Scatter(x = x_train.iloc[:,4],
-                                y = y_train,
-                                mode ='markers',
-                                name = 'facebook'
-                               ),
-                    go.Scatter(x = x_range,
-                               y = y_pred,
-                               name = 'regression fit')
-                    
-                    ]) 
     fig.update_layout(
     title="Key performance indicators",
     xaxis_title="Variable spends",
     yaxis_title="sales",
     legend_title="Legend",
+    template = 'ggplot2',
     font=dict(
         family="Courier New, monospace",
-        size=18,
+        size=20,
         color="RebeccaPurple"
     )
 )
@@ -255,5 +202,7 @@ def mod(df):
 
 if __name__ == '__main__':
     app.run_server(debug = False)
+                #    host = "0.0.0.0",
+                #    port = 8080)
         
     
