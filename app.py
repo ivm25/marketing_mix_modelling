@@ -46,7 +46,7 @@ external_stylesheets = [dbc.themes.CYBORG]
 app = Dash(__name__,
            external_stylesheets=external_stylesheets)
 
-
+server = app.server
 
 
 # APP
@@ -202,7 +202,5 @@ def mod(selected_col):
 
 if __name__ == '__main__':
     app.run_server(debug = False)
-                #    host = "0.0.0.0",
-                #    port = 8080)
-        
+
     
