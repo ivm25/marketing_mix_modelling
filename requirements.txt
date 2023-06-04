@@ -23,3 +23,5 @@ dash_bootstrap_components
 dash_design_kit
 dash_daq
 werkzeug==2.0.3
+
+gunicorn
