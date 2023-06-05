@@ -125,10 +125,10 @@ key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
 key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(str)
 key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(float)
 key_coefficients['variable'] = key_coefficients['variable'].astype(str)
-key_coefficients['key_variable'] = key_coefficients['variable'].str[3:]
+key_coefficients['key variable'] = key_coefficients['variable'].str[8:]
 
 figure_2 = px.bar(key_coefficients,
-                  x = 'key_variable',
+                  x = 'key variable',
                   y ='coefficient',
                   color = 'coefficient',
                   text = 'coefficient'
