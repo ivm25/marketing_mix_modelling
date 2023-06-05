@@ -42,7 +42,7 @@ correlation_df = simulated_data_df\
 
 
 # APP SETUP
-external_stylesheets = [dbc.themes.SKETCHY]
+external_stylesheets = [dbc.themes.ZEPHYR]
 
 app = Dash(__name__,
            external_stylesheets=external_stylesheets)
@@ -170,6 +170,7 @@ app.layout = html.Div(children=[navbar,
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(figure = figure_2, style ={'display': 'inline-block'}))]),
+    html.H4("Key Takeaway:Each dollar spent on print media delivers higher value (highest coefficeints)"),
     dcc.Graph(figure = table)
 ])
 
