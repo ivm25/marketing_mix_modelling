@@ -200,7 +200,8 @@ def mod(selected_col):
         color="RebeccaPurple"
     )
 )
-     
+    fig.update_layout(yaxis_tickprefix = '$', yaxis_tickformat = ',.')
+    fig.update_layout(xaxis_tickprefix = '$', xaxis_tickformat = ',.')
     return fig
 
 
