@@ -144,6 +144,9 @@ figure_2.update_layout(
     )
 )
 
+figure_2.update_xaxes(showticklabels=False)
+
+
 independent_vars = {'TV': correlation_df['tv_s'],
                     'OOH':correlation_df['ooh_s']}
 
@@ -154,8 +157,8 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
-        value=correlation_df.columns[1],
-        style={'display': 'inline-block'}
+        value=correlation_df.columns[1]
+       
        
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
