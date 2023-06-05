@@ -132,19 +132,19 @@ figure_2 = px.bar(key_coefficients,
                   color = 'coefficient'
                   )
 figure_2.update_layout(
-    title="Coefficeint Values calculated for adstock = 0.50",
+    title="Coefficeint Values for adstock = 0.50",
     # xaxis_title="key variables",
     yaxis_title="coefficients",
     template = 'ggplot2',
     legend_title="Legend",
     font=dict(
         family="Courier New, monospace",
-        size=20,
+        size=16,
         color="RebeccaPurple"
     )
 )
 
-figure_2.update_xaxes(showticklabels=False)
+figure_2.update_xaxes(showticklabels=True)
 figure_2.update_layout(showlegend=True)
 
 independent_vars = {'TV': correlation_df['tv_s'],
@@ -196,7 +196,7 @@ def mod(selected_col):
     template = 'ggplot2',
     font=dict(
         family="Courier New, monospace",
-        size=20,
+        size=16,
         color="RebeccaPurple"
     )
 )
