@@ -42,9 +42,9 @@ correlation_df = simulated_data_df\
 
 
 # APP SETUP
-external_stylesheets = [dbc.themes.CYBORG]
-app = Dash(__name__,
-           external_stylesheets=external_stylesheets)
+# external_stylesheets = [dbc.themes.CYBORG]
+
+app = Dash(__name__)
 
 server = app.server
 
