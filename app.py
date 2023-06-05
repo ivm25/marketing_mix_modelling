@@ -42,7 +42,7 @@ correlation_df = simulated_data_df\
 
 
 # APP SETUP
-external_stylesheets = [dbc.themes.JOURNAL]
+external_stylesheets = [dbc.themes.SKETCHY]
 
 app = Dash(__name__,
            external_stylesheets=external_stylesheets)
@@ -118,14 +118,14 @@ table.update_layout(template = 'ggplot2',
                     title = "Mulilple Linear Regression output for adstock 0.50",
                     font=dict(
                     family="Courier New, monospace",
-                    size=16,
+                    size=14,
                     color="RebeccaPurple")
                     )
       
 
 
 key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
-                    .iloc[1:7,0:2]\
+                    .iloc[1:6,0:2]\
                     .rename(columns={0:'variable', 1:'coefficient'})
                     
                     
@@ -198,7 +198,7 @@ def mod(selected_col):
     fig.update_layout(
     title="Key performance indicators",
     xaxis_title="Variable spends",
-    yaxis_title="sales",
+    yaxis_title="Revenue",
     legend_title="Legend",
     template = 'ggplot2',
     font=dict(
