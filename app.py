@@ -148,8 +148,8 @@ independent_vars = {'TV': correlation_df['tv_s'],
 
 
 app.layout = html.Div(children=[navbar,
-    html.H4("Optimising the marketing mix"),
-    # dbc.Row([dbc.Col(html.P("Select model:")),
+    html.H4("Understanding the impact of different marketing mix strategies on sales"),
+    dbc.Row([dbc.Col(html.P("Select the variable:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
