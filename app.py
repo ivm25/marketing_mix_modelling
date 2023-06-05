@@ -155,8 +155,8 @@ app.layout = html.Div(children=[navbar,
         options=list(correlation_df.columns),
         value=correlation_df.columns[1]
        
-    )),
-    dbc.Col(dcc.Graph(id="graph")),
+    ))]),
+    dbc.Row([dbc.Col(dcc.Graph(id="graph")),
     dbc.Col(dcc.Graph(figure = figure_2))]),
     dcc.Graph(figure = table)
 ])
