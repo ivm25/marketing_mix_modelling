@@ -42,7 +42,7 @@ correlation_df = simulated_data_df\
 
 
 # APP SETUP
-external_stylesheets = [dbc.themes.BOOTSTRAP]
+external_stylesheets = [dbc.themes.JOURNAL]
 
 app = Dash(__name__,
            external_stylesheets=external_stylesheets)
@@ -52,7 +52,7 @@ server = app.server
 
 # APP
 navbar = dbc.Navbar(
-         [html.A(dbc.Row([dbc.Row(dbc.NavbarBrand("Marketing Mix Optimisation", className= "ml-2"))
+         [html.A(dbc.Row([dbc.Row(dbc.NavbarBrand("Marketing Mix Modelling", className= "ml-2"))
                           ],
                          align = "center"
                          )
