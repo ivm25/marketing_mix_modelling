@@ -114,7 +114,14 @@ table = go.Figure(data=[go.Table(
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])))
 )])
 
-table.update_layout(template = 'ggplot2')
+table.update_layout(template = 'ggplot2',
+                    title = "Mulilple Linear Regression output for adstock 0.50",
+                    font=dict(
+                    family="Courier New, monospace",
+                    size=16,
+                    color="RebeccaPurple")
+                    )
+      
 
 
 key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
@@ -198,7 +205,7 @@ def mod(selected_col):
         family="Courier New, monospace",
         size=16,
         color="RebeccaPurple"
-    )
+    )  
 )
     fig.update_layout(yaxis_tickprefix = '$', yaxis_tickformat = ',.')
     fig.update_layout(xaxis_tickprefix = '$', xaxis_tickformat = ',.')
