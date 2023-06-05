@@ -139,7 +139,7 @@ figure_2.update_layout(
     legend_title="Legend",
     font=dict(
         family="Courier New, monospace",
-        size=14,
+        size=20,
         color="RebeccaPurple"
     )
 )
@@ -154,7 +154,8 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
-        value=correlation_df.columns[1]
+        value=correlation_df.columns[1],
+        style={'display': 'inline-block'}
        
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
