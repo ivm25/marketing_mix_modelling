@@ -125,11 +125,13 @@ key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
 key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(str)
 key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(float)
 key_coefficients['variable'] = key_coefficients['variable'].astype(str)
+key_coefficients['key_variable'] = key_coefficients['variable'].str[3:]
 
 figure_2 = px.bar(key_coefficients,
-                  x = 'variable',
+                  x = 'key_variable',
                   y ='coefficient',
-                  color = 'coefficient'
+                  color = 'coefficient',
+                  text = 'coefficient'
                   )
 figure_2.update_layout(
     title="Coefficeint Values for adstock = 0.50",
@@ -147,8 +149,6 @@ figure_2.update_layout(
 figure_2.update_xaxes(showticklabels=True)
 figure_2.update_layout(showlegend=True)
 
-independent_vars = {'TV': correlation_df['tv_s'],
-                    'OOH':correlation_df['ooh_s']}
 
 
 app.layout = html.Div(children=[navbar,
