@@ -30,11 +30,9 @@
 
       b) Use dash to create a simple way to interact with the charts and 
          key model outputs.
-4. *A time series chart of the various media spends in the data can be seen below*:
-![media_time_series_plot](https://user-images.githubusercontent.com/44321100/233207206-c69e3a95-4886-4131-8ef5-9403afc7abc5.png)
-
-5. *A corelation plot of the various factors in the data can be seen in the plot below*:
-
-![corelationplot](https://user-images.githubusercontent.com/44321100/233208014-199f019e-71d8-48f1-a56e-aee85fa79bf6.png)
 
 
+
+
+
+![mmx modelling](https://github.com/ivm25/marketing_mix_modelling/assets/44321100/825b2feb-9466-4424-9569-d56c18e0310b)
