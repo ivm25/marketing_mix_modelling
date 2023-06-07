@@ -164,7 +164,7 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
-        value=correlation_df.columns[1]
+        value=correlation_df.columns[3]
        
        
     ))]),
@@ -197,7 +197,7 @@ def mod(selected_col):
     
 
     fig.update_layout(
-    title="Key performance indicators",
+    title="Revenue as a function of media spends <br><sup>Print Media has the highest R square value</sup>",
     xaxis_title="Variable spends",
     yaxis_title="Revenue",
     legend_title="Legend",
