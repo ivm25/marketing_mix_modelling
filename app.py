@@ -115,7 +115,7 @@ table = go.Figure(data=[go.Table(
 )])
 
 table.update_layout(template = 'ggplot2',
-                    title = "Mulilple Linear Regression output for adstock 0.50",
+                    title = "Mulilple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
                     font=dict(
                     family="Courier New, monospace",
                     size=14,
@@ -164,13 +164,12 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
-        value=correlation_df.columns[3]
+        value=correlation_df.columns[4]
        
        
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(figure = figure_2, style ={'display': 'inline-block'}))]),
-    html.H4("Key Takeaway:Each dollar spent on print media delivers higher value (highest coefficeints)"),
     dcc.Graph(figure = table)
 ])
 
@@ -197,7 +196,7 @@ def mod(selected_col):
     
 
     fig.update_layout(
-    title="Revenue as a function of media spends <br><sup>Print Media has the highest R square value</sup>",
+    title="Revenue as a function of media spends <br><sup>Search Media has the highest R square value</sup>",
     xaxis_title="Variable spends",
     yaxis_title="Revenue",
     legend_title="Legend",
