@@ -112,7 +112,8 @@ font_colour = ['rgb(255,0,0)' if v == "  'revenue'" else 'rgb(102,51,153)' for v
 
 table = go.Figure(data=[go.Table(
     header=dict(values=list(model_ols.summary().tables[0].data[0]),
-                fill = dict(color = font_colour)),
+                fill = dict(color = font_colour),
+                font = dict(color = 'rgb(255,255,255)')),
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])),
                fill = dict(color='rgb(245,245,245)'),
                font= dict(family="Courier New, monospace", size=14, color='rgb(255,0,0)'))
