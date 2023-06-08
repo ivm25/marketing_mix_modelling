@@ -108,19 +108,21 @@ model_ols = sm.OLS(y_train, x_train).fit()
 
 output_summary_stats = model_summary_to_dataframe(model_ols)    
 
+font_colour = ['rgb(255,0,0)' if v > 0.1 else 'rgb(10,10,10)' for v in model_ols.summary().tables[0].data[0]]
 
 table = go.Figure(data=[go.Table(
     header=dict(values=list(model_ols.summary().tables[0].data[0])),
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])),
-               fill = dict(color='rgb(245,0,0)'))
+               fill = dict(color='rgb(245,245,245)'),
+               font= dict(family="Courier New, monospace", size=14, color=font_colour))
 )])
 
 table.update_layout(template = 'ggplot2',
                     title = "Mulilple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
                     font=dict(
                     family="Courier New, monospace",
-                    size=14,
-                    color="RebeccaPurple")
+                    size=14
+                    )
                     )
       
 
