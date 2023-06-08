@@ -112,7 +112,7 @@ output_summary_stats = model_summary_to_dataframe(model_ols)
 table = go.Figure(data=[go.Table(
     header=dict(values=list(model_ols.summary().tables[0].data[0])),
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])),
-               fill = dict(color='rgb(245,245,245)'))
+               fill = dict(color='rgb(245,0,0)'))
 )])
 
 table.update_layout(template = 'ggplot2',
