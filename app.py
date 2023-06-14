@@ -116,7 +116,7 @@ table = go.Figure(data=[go.Table(
                 font = dict(color = 'rgb(255,255,255)')),
     cells=dict(values=list(zip(*model_ols.summary().tables[0].data[1:])),
                fill = dict(color='rgb(245,245,245)'),
-               font= dict(family="Courier New, monospace", size=14, color='rgb(255,0,0)'))
+               font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
 )])
 
 table.update_layout(template = 'ggplot2',
