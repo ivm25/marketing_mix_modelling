@@ -120,7 +120,7 @@ table = go.Figure(data=[go.Table(
 )])
 
 table.update_layout(template = 'ggplot2',
-                    title = "Mulilple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
+                    title = "Multiple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
                     font=dict(
                     family="Courier New, monospace",
                     size=14
