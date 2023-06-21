@@ -123,7 +123,8 @@ table.update_layout(template = 'ggplot2',
                     title = "Multiple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
                     font=dict(
                     family="Courier New, monospace",
-                    size=14
+                    size=14,
+                    title_font_color="RebeccaPurple"
                     )
                     )
       
@@ -165,12 +166,12 @@ figure_2.update_layout(showlegend=True)
 
 app.layout = html.Div(children=[navbar,
     html.H4("Understanding the impact of different marketing mix strategies on sales"),
-    dbc.Row([dbc.Col(html.P("Select the variable:"))]),
+    dbc.Row([dbc.Col(html.P("Select a variable:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
         value=correlation_df.columns[4],
-         style={"width": "500px"},
+         style={"width": "550px"},
         
        
        
