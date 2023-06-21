@@ -170,7 +170,8 @@ app.layout = html.Div(children=[navbar,
         id='dropdown',
         options=list(correlation_df.columns),
         value=correlation_df.columns[4],
-         style={"width": "50%"}
+         style={"width": "230px"},
+         multi = True
        
        
     ))]),
