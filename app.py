@@ -124,8 +124,8 @@ table.update_layout(template = 'ggplot2',
                     font=dict(
                     family="Courier New, monospace",
                     size=14,
-                    title_font_color="RebeccaPurple"
-                    )
+                    ),
+                    title_font_color = "RebeccaPurple"
                     )
       
 
