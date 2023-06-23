@@ -108,7 +108,7 @@ model_ols = sm.OLS(y_train, x_train).fit()
 
 output_summary_stats = model_summary_to_dataframe(model_ols)    
 
-font_colour = ['rgb(255,0,0)']
+font_colour = "RebeccaPurple"
 
 table = go.Figure(data=[go.Table(
     header=dict(values=list(model_ols.summary().tables[0].data[0]),
@@ -120,7 +120,7 @@ table = go.Figure(data=[go.Table(
 )])
 
 table.update_layout(template = 'ggplot2',
-                    title = "Multiple Linear Regression output for adstock 0.50<br><sup>R square value of <b>0.910</b></sup>",
+                    title = "Multiple Linear Regression output for adstock <b>0.50</b><br><sup>R square value of <b>0.910</b></sup>",
                     font=dict(
                     family="Courier New, monospace",
                     size=14,
@@ -147,7 +147,7 @@ figure_2 = px.bar(key_coefficients,
                   text = 'coefficient'
                   )
 figure_2.update_layout(
-    title="Coefficeint Values for adstock = 0.50",
+    title="Coefficeint Values for adstock = <b>0.50</b>",
     # xaxis_title="key variables",
     yaxis_title="coefficients",
     template = 'ggplot2',
