@@ -120,7 +120,7 @@ table = go.Figure(data=[go.Table(
 )])
 
 table.update_layout(template = 'ggplot2',
-                    title = "Multiple Linear Regression output for adstock 0.50<br><sup>R square value of 0.910</sup>",
+                    title = "Multiple Linear Regression output for adstock 0.50<br><sup><b>R square value of 0.910</b></sup>",
                     font=dict(
                     family="Courier New, monospace",
                     size=14,
@@ -206,7 +206,7 @@ def mod(selected_col):
     fig.update_layout(
     title="Revenue as a function of media spends <br><sup>Search Media has the highest R square value</sup>",
     xaxis_title="Variable spends",
-    yaxis_title="Revenue",
+    yaxis_title="Revenue", 
     legend_title="Legend",
     template = 'ggplot2',
     font=dict(
