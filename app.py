@@ -108,7 +108,7 @@ model_ols = sm.OLS(y_train, x_train).fit()
 
 output_summary_stats = model_summary_to_dataframe(model_ols)    
 
-font_colour = ['rgb(255,0,0)' if v == "  'revenue'" else 'rgb(102,51,153)' for v in model_ols.summary().tables[0].data[0]]
+font_colour = ['rgb(255,0,0)']
 
 table = go.Figure(data=[go.Table(
     header=dict(values=list(model_ols.summary().tables[0].data[0]),
@@ -120,7 +120,7 @@ table = go.Figure(data=[go.Table(
 )])
 
 table.update_layout(template = 'ggplot2',
-                    title = "Multiple Linear Regression output for adstock 0.50<br><sup><b>R square value of 0.910</b></sup>",
+                    title = "Multiple Linear Regression output for adstock 0.50<br><sup>R square value of <b>0.910</b></sup>",
                     font=dict(
                     family="Courier New, monospace",
                     size=14,
@@ -204,7 +204,7 @@ def mod(selected_col):
     
 
     fig.update_layout(
-    title="Revenue as a function of media spends <br><sup>Search Media has the highest R square value</sup>",
+    title="Revenue as a function of media spends <br><sup><b>Search Media has the highest R square value</b></sup>",
     xaxis_title="Variable spends",
     yaxis_title="Revenue", 
     legend_title="Legend",
