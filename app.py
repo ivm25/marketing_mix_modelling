@@ -204,7 +204,7 @@ def mod(selected_col):
     
 
     fig.update_layout(
-    title="Revenue as a function of media spends <br><sup><b>Search Media has the highest R square value</b></sup>",
+    title="Revenue as a function of media spends <br><sup><b>Search Media</b> has the highest R square value</sup>",
     xaxis_title="Variable spends",
     yaxis_title="Revenue", 
     legend_title="Legend",
