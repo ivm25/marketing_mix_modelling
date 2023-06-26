@@ -128,8 +128,26 @@ table.update_layout(template = 'ggplot2',
                     title_font_color = "RebeccaPurple"
                     )
       
+table_2 = go.Figure(data=[go.Table(
+    header=dict(values=list(model_ols.summary().tables[1].data[0]),
+                fill = dict(color = font_colour),
+                font = dict(color = 'rgb(255,255,255)')),
+    cells=dict(values=list(zip(*model_ols.summary().tables[1].data[1:])),
+               fill = dict(color='rgb(245,245,245)'),
+               font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
+)])
+
+table_2.update_layout(template = 'ggplot2',
+                    title = "Multiple Linear Regression output for adstock <b>0.50</b><br><sup>R square value of <b>0.910</b></sup>",
+                    font=dict(
+                    family="Courier New, monospace",
+                    size=14,
+                    ),
+                    title_font_color = "RebeccaPurple"
+                    )
 
 
+# data prep to show coefficients
 key_coefficients = pd.DataFrame(model_ols.summary().tables[1])\
                     .iloc[1:6,0:2]\
                     .rename(columns={0:'variable', 1:'coefficient'})
@@ -178,7 +196,8 @@ app.layout = html.Div(children=[navbar,
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(figure = figure_2, style ={'display': 'inline-block'}))]),
-    dcc.Graph(figure = table)
+    dbc.Row([dbc.Col(dcc.Graph(figure = table)),
+             dbc.Col(dcc.Graph(figure = table_2))])
 ])
 
 # Writing Callbacks
