@@ -129,10 +129,10 @@ table.update_layout(template = 'ggplot2',
                     )
       
 table_2 = go.Figure(data=[go.Table(
-    header=dict(values=list(model_ols.summary().tables[1].data[0,0:5]),
+    header=dict(values=list(model_ols.summary().tables[1].data[0]),
                 fill = dict(color = font_colour),
                 font = dict(color = 'rgb(255,255,255)')),
-    cells=dict(values=list(zip(*model_ols.summary().tables[1].data[1:9,0:5])),
+    cells=dict(values=list(zip(*model_ols.summary().tables[1].data[1:])),
                fill = dict(color='rgb(245,245,245)'),
                font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
 )])
