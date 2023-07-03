@@ -33,7 +33,7 @@
 
 
 
-- The dash web app is hosted on render and can be visited byclicking on this link below:
+- The dash web app is hosted on render and can be visited by clicking on this link below:
 
 - https://marketingmixmodelling-dashexample.onrender.com/
 
