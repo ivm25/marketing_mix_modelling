@@ -1,6 +1,6 @@
-# marketing_mix_modelling
+# marketing mix modelling
 
---
+
 
 1. *Business Problem*:
    
@@ -33,6 +33,8 @@
 
 
 
+- The dash web app is hosted on render and can be visited byclicking on this link below:
+
+- https://marketingmixmodelling-dashexample.onrender.com/
 
 
-![mmx modelling](https://github.com/ivm25/marketing_mix_modelling/assets/44321100/825b2feb-9466-4424-9569-d56c18e0310b)
