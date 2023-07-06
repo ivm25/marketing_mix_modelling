@@ -26,7 +26,7 @@ import statsmodels.api as sm
 from models.models import model_summary_to_dataframe
 from models.models import adstock
 from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot
-
+from data_prep.data_prep import generate_grid, adstock_model, extract_coefficients
 
 # Data load
 
@@ -66,7 +66,14 @@ navbar = dbc.Navbar(
         #  dark = True
           )
 
+# importing models from the prep work
 
+# grid = generate_grid(size = 100)
+
+# ols_models = adstock_model(correlation_df,
+#                            grid)
+
+# key_coefficients_dict = extract_coefficients(model_dict = ols_models)
 
 # Create a table with the model summary
 df = correlation_df
