@@ -96,8 +96,6 @@ x_train, x_test, y_train, y_test = train_test_split(X,
                                                 Y,
                                                 random_state = 42)
 
-melted_training_data = pd.melt(x_train.reset_index(),
-                                id_vars = 'index')
 
 cons = sm.add_constant(x_train)
 
