@@ -68,12 +68,12 @@ navbar = dbc.Navbar(
 
 # importing models from the prep work
 
-# grid = generate_grid(size = 100)
+grid = generate_grid(size = 100)
 
-# ols_models = adstock_model(correlation_df,
-#                            grid)
+ols_models = adstock_model(correlation_df,
+                           grid)
 
-# key_coefficients_dict = extract_coefficients(model_dict = ols_models)
+key_coefficients_dict = extract_coefficients(model_dict = ols_models)
 
 # Create a table with the model summary
 df = correlation_df
@@ -194,6 +194,14 @@ app.layout = html.Div(children=[navbar,
         id='dropdown',
         options=list(correlation_df.columns),
         value=correlation_df.columns[4],
+         style={"width": "600px"},
+        
+       
+       
+    )),dbc.Col(dcc.Dropdown(
+        id='dropdown_adstock',
+        options=list(key_coefficients_dict.keys()),
+        value = 0.5,
          style={"width": "600px"},
         
        
