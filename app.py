@@ -163,27 +163,27 @@ key_coefficients['coefficient'] = key_coefficients['coefficient'].astype(float)
 key_coefficients['variable'] = key_coefficients['variable'].astype(str)
 key_coefficients['key variable'] = key_coefficients['variable'].str[8:]
 
-figure_2 = px.bar(key_coefficients,
-                  x = 'key variable',
-                  y ='coefficient',
-                  color = 'coefficient',
-                  text = 'coefficient'
-                  )
-figure_2.update_layout(
-    title="Coefficeint Values for adstock = <b>0.50</b>",
-    # xaxis_title="key variables",
-    yaxis_title="coefficients",
-    template = 'ggplot2',
-    legend_title="Legend",
-    font=dict(
-        family="Courier New, monospace",
-        size=16,
-        color="RebeccaPurple"
-    )
-)
+# figure_2 = px.bar(key_coefficients,
+#                   x = 'key variable',
+#                   y ='coefficient',
+#                   color = 'coefficient',
+#                   text = 'coefficient'
+#                   )
+# figure_2.update_layout(
+#     title="Coefficeint Values for adstock = <b>0.50</b>",
+#     # xaxis_title="key variables",
+#     yaxis_title="coefficients",
+#     template = 'ggplot2',
+#     legend_title="Legend",
+#     font=dict(
+#         family="Courier New, monospace",
+#         size=16,
+#         color="RebeccaPurple"
+#     )
+# )
 
-figure_2.update_xaxes(showticklabels=True)
-figure_2.update_layout(showlegend=True)
+# figure_2.update_xaxes(showticklabels=True)
+# figure_2.update_layout(showlegend=True)
 
 
 
@@ -208,7 +208,7 @@ app.layout = html.Div(children=[navbar,
        
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
-    dbc.Col(dcc.Graph(figure = figure_2, style ={'display': 'inline-block'}))]),
+    dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
     dbc.Row([dbc.Col(dcc.Graph(figure = table)),
              dbc.Col(dcc.Graph(figure = table_2))])
 ])
@@ -251,6 +251,41 @@ def mod(selected_col):
     fig.update_layout(xaxis_tickprefix = '$', xaxis_tickformat = ',.')
     return fig
 
+
+@app.callback(
+    Output(component_id="graph_2", component_property="figure"),
+    Input(component_id="dropdown_adstck", component_property="value")
+)
+
+def scenario_adstock(selected_key):
+  
+    if selected_key is None:
+        selected_key = 0.578
+   
+
+
+    figure_2 = px.bar(ols_models.get(selected_key),
+                    x = pd.DataFrame(ols_models.get(selected_key)).iloc[0],
+                    y = pd.DataFrame(ols_models.get(selected_key)).iloc[1],
+                    color = 'coefficient',
+                    text = 'coefficient'
+                    )
+    figure_2.update_layout(
+        title="Coefficeint Values for adstock = <b>0.50</b>",
+        # xaxis_title="key variables",
+        yaxis_title="coefficients",
+        template = 'ggplot2',
+        legend_title="Legend",
+        font=dict(
+            family="Courier New, monospace",
+            size=16,
+            color="RebeccaPurple"
+        )
+    )
+
+    figure_2.update_xaxes(showticklabels=True)
+    figure_2.update_layout(showlegend=True)
+    return figure_2
 
 
 if __name__ == '__main__':
