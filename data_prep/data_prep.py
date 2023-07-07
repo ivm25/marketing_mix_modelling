@@ -67,7 +67,9 @@ def adstock_model(correlation_df,
                               adstock_ooh_new, 
                               adstock_print_new,
                               adstock_search_new,
-                              adstock_facebook_new],
+                              adstock_facebook_new,
+                             correlation_df.competitor_sales_b,
+                             pd.get_dummies(correlation_df.date_month)],
                               axis = 1)
     
         ind_vars = correlation_df.revenue
