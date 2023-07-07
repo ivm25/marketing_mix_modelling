@@ -198,6 +198,14 @@ app.layout = html.Div(children=[navbar,
         
        
        
+    )),dbc.Col(dcc.Dropdown(
+        id='dropdown_adstck',
+        options=list(key_coefficients_dict.keys()),
+        value=0.5,
+         style={"width": "600px"},
+        
+       
+       
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(figure = figure_2, style ={'display': 'inline-block'}))]),
