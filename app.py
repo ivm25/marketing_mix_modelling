@@ -70,7 +70,7 @@ navbar = dbc.Navbar(
 
 grid = generate_grid(size = 100)
 
-ols_models = adstock_model(correlation_df,
+ols_models = adstock_model(correlation_df[0:100],
                            grid)
 
 key_coefficients_dict = extract_coefficients(model_dict = ols_models)
