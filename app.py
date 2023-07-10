@@ -261,7 +261,7 @@ def scenario_adstock(selected_key):
   
     if selected_key is None:
         selected_key = 0.578
-    selected_data = pd.DataFrame(ols_models.get(selected_key))
+    selected_data = pd.DataFrame(key_coefficients_dict.get(selected_key))
 
 
     figure_2 = px.bar(selected_data,
