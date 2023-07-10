@@ -283,7 +283,7 @@ def rsquared_table(selected_key):
                         ),
                         title_font_color = "RebeccaPurple"
                         )
-    return rsquared_table
+    return table
 
 
 if __name__ == '__main__':
