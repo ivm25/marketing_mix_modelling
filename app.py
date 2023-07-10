@@ -133,7 +133,7 @@ app.layout = html.Div(children=[navbar,
         id='dropdown_adstck',
         # options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
-         style={"width": "600px"},
+        #  style={"width": "600px"},
         
        
        
