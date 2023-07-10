@@ -239,7 +239,7 @@ def rsquared_table(selected_key):
     )])
 
     table.update_layout(template = 'ggplot2',
-                        title = "Multiple Linear Regression output for adstock <b>0.50</b><br><sup>R square value of <b>0.910</b></sup>",
+                        title = "Multiple Linear Regression output for adstock =" + str(selected_key),
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
@@ -269,7 +269,7 @@ def significance_values(selected_key):
     )])
 
     table_2.update_layout(template = 'ggplot2',
-                        title = "Signifiance values for adstock <b>0.50</b><br><sup>R square value of <b>0.910</b></sup>",
+                        title = "Signifiance values for adstock =" + str(selected_key),
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
