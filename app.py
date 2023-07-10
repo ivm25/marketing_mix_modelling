@@ -271,7 +271,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = " + selected_key,
+        title="Coefficeint Values for adstock = ",
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
