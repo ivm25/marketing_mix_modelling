@@ -77,62 +77,42 @@ key_coefficients_dict = extract_coefficients(model_dict = ols_models)
 
 # Create a table with the model summary
 df = correlation_df
-adstock_tv_s = adstock(df.tv_s, 0.5)
-adstock_ooh_s = adstock(df.ooh_s, 0.5)
+# adstock_tv_s = adstock(df.tv_s, 0.5)
+# adstock_ooh_s = adstock(df.ooh_s, 0.5)
 
-adstock_print_s = adstock(df.print_s, 0.5)
-adstock_search_s = adstock(df.search_s, 0.5)
+# adstock_print_s = adstock(df.print_s, 0.5)
+# adstock_search_s = adstock(df.search_s, 0.5)
 
-adstock_facebook_s = adstock(df.facebook_s, 0.5)
+# adstock_facebook_s = adstock(df.facebook_s, 0.5)
 
 
 
 # prep fpr modelling
 
-X = pd.concat([adstock_tv_s, 
-            adstock_ooh_s, 
-            adstock_print_s,
-            adstock_search_s,
-            adstock_facebook_s,
-            df.competitor_sales_b,
-            pd.get_dummies(df.date_month)
-            ], axis = 1)
+# X = pd.concat([adstock_tv_s, 
+#             adstock_ooh_s, 
+#             adstock_print_s,
+#             adstock_search_s,
+#             adstock_facebook_s,
+#             df.competitor_sales_b,
+#             pd.get_dummies(df.date_month)
+#             ], axis = 1)
 
-Y = df.revenue
-x_train, x_test, y_train, y_test = train_test_split(X,
-                                                Y,
-                                                random_state = 42)
-
-
-cons = sm.add_constant(x_train)
-
-model_ols = sm.OLS(y_train, x_train).fit()
+# Y = df.revenue
+# x_train, x_test, y_train, y_test = train_test_split(X,
+#                                                 Y,
+#                                                 random_state = 42)
 
 
-# print(model_ols.summary())
+# cons = sm.add_constant(x_train)
 
-# output_summary_stats = model_summary_to_dataframe(model_ols)    
+# model_ols = sm.OLS(y_train, x_train).fit()
+
+
+
 
 font_colour = "RebeccaPurple"
 
-
-# table_2 = go.Figure(data=[go.Table(
-#     header=dict(values=list(model_ols.summary().tables[1].data[0]),
-#                 fill = dict(color = font_colour),
-#                 font = dict(color = 'rgb(255,255,255)')),
-#     cells=dict(values=list(zip(*model_ols.summary().tables[1].data[1:])),
-#                fill = dict(color='rgb(245,245,245)'),
-#                font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
-# )])
-
-# table_2.update_layout(template = 'ggplot2',
-#                     title = "Signifiance values for adstock <b>0.50</b><br><sup>R square value of <b>0.910</b></sup>",
-#                     font=dict(
-#                     family="Courier New, monospace",
-#                     size=14,
-#                     ),
-#                     title_font_color = "RebeccaPurple"
-#                     )
 
 
 
@@ -221,7 +201,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = ",
+        title="Coefficeint Values for adstock = " + str(selected_key),
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
