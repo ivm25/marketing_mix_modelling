@@ -201,7 +201,7 @@ app.layout = html.Div(children=[navbar,
     )),dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
         options=list(key_coefficients_dict.keys()),
-        value=0.5,
+        value=0.1791267574878015,
          style={"width": "600px"},
         
        
@@ -271,7 +271,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = <b>selected_key</b>",
+        title="Coefficeint Values for adstock = " + selected_key,
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
