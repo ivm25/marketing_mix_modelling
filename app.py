@@ -260,7 +260,7 @@ def mod(selected_col):
 def scenario_adstock(selected_key):
   
     if selected_key is None:
-        selected_key = 0.578
+        selected_key = 0.1791267574878015
     selected_data = pd.DataFrame(key_coefficients_dict.get(selected_key))
 
 
@@ -271,7 +271,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = <b>0.50</b>",
+        title="Coefficeint Values for adstock = <b>selected_key</b>",
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
