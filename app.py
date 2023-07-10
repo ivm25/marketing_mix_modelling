@@ -128,12 +128,11 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    )),dbc.Col(dcc.Slider(min = min(list(key_coefficients_dict.keys())),
-                          max = max(list(key_coefficients_dict.keys())),
+    )),dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
-        # options=list(key_coefficients_dict.keys()),
+        options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
-        #  style={"width": "600px"},
+         style={"width": "600px"},
         
        
        
