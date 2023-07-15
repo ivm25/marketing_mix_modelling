@@ -76,41 +76,8 @@ ols_models = adstock_model(correlation_df[0:100],
 key_coefficients_dict = extract_coefficients(model_dict = ols_models)
 
 # Create a table with the model summary
+
 df = correlation_df
-# adstock_tv_s = adstock(df.tv_s, 0.5)
-# adstock_ooh_s = adstock(df.ooh_s, 0.5)
-
-# adstock_print_s = adstock(df.print_s, 0.5)
-# adstock_search_s = adstock(df.search_s, 0.5)
-
-# adstock_facebook_s = adstock(df.facebook_s, 0.5)
-
-
-
-# prep fpr modelling
-
-# X = pd.concat([adstock_tv_s, 
-#             adstock_ooh_s, 
-#             adstock_print_s,
-#             adstock_search_s,
-#             adstock_facebook_s,
-#             df.competitor_sales_b,
-#             pd.get_dummies(df.date_month)
-#             ], axis = 1)
-
-# Y = df.revenue
-# x_train, x_test, y_train, y_test = train_test_split(X,
-#                                                 Y,
-#                                                 random_state = 42)
-
-
-# cons = sm.add_constant(x_train)
-
-# model_ols = sm.OLS(y_train, x_train).fit()
-
-
-
-
 font_colour = "RebeccaPurple"
 
 
@@ -119,7 +86,7 @@ font_colour = "RebeccaPurple"
 
 app.layout = html.Div(children=[navbar,
     html.H4("Understanding the impact of different marketing mix strategies on sales"),
-    dbc.Row([dbc.Col(html.P("Select a variable:"))]),
+    dbc.Row([dbc.Col(html.P("Select a variable:")), dbc.Col(html.P("Select an adstock scenario:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
         options=list(correlation_df.columns),
