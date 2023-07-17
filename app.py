@@ -134,7 +134,7 @@ def mod(selected_col):
 
     fig.update_layout(
     title="Revenue as a function of media spends <br><sup><b>Search Media</b> has the highest R square value</sup>",
-    xaxis_title="Variable spends",
+    xaxis_title= selected_col + "spends",
     yaxis_title="Revenue", 
     legend_title="Legend",
     template = 'ggplot2',
