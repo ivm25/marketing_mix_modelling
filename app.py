@@ -168,7 +168,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = " + str(selected_key) + "<sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>",
+        title="Coefficeint Values for adstock = <sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>" + str(selected_key),
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
