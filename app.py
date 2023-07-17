@@ -168,7 +168,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = <br><sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>" + str(selected_key),
+        title="Coefficeint Values for the chosen adstock value<br><sup><b>TV and Facebook</b> have the highest ROI for every $ spent on advertising</sup>",
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
@@ -206,7 +206,7 @@ def rsquared_table(selected_key):
     )])
 
     table.update_layout(template = 'ggplot2',
-                        title = "Multiple Linear Regression output for adstock =" + str(selected_key),
+                        title = "Multiple Linear Regression output for adstock =" + str(round(selected_key,2)),
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
@@ -236,7 +236,7 @@ def significance_values(selected_key):
     )])
 
     table_2.update_layout(template = 'ggplot2',
-                        title = "Signifiance values for adstock =" + str(selected_key),
+                        title = "Signifiance values for adstock =" + str(round(selected_key,2)),
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
