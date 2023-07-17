@@ -97,8 +97,8 @@ app.layout = html.Div(children=[navbar,
        
     )),dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
-        options=[round(n,2) for n in list(key_coefficients_dict.keys())],
-        value=0.18,
+        options=list(key_coefficients_dict.keys()),
+        value=0.1791267574878015,
          style={"width": "600px"},
         
        
@@ -157,7 +157,7 @@ def mod(selected_col):
 def scenario_adstock(selected_key):
   
     if selected_key is None:
-        selected_key = 0.18
+        selected_key = 0.1791267574878015
     selected_data = pd.DataFrame(key_coefficients_dict.get(selected_key))
 
 
@@ -193,7 +193,7 @@ def scenario_adstock(selected_key):
 def rsquared_table(selected_key):
     
     if selected_key is None:
-        selected_key = 0.18
+        selected_key = 0.1791267574878015
     selected_model = ols_models.get(selected_key)
 
     table = go.Figure(data=[go.Table(
@@ -223,7 +223,7 @@ def rsquared_table(selected_key):
 def significance_values(selected_key):
     
     if selected_key is None:
-        selected_key = 0.18
+        selected_key = 0.1791267574878015
     selected_model = ols_models.get(selected_key)
     
     table_2 = go.Figure(data=[go.Table(
