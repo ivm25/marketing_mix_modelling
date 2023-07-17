@@ -134,7 +134,7 @@ def mod(selected_col):
 
     fig.update_layout(
     title="Revenue as a function of media spends <br><sup><b>Search Media</b> has the highest R square value</sup>",
-    xaxis_title= selected_col + "spends",
+    xaxis_title= selected_col + "pends",
     yaxis_title="Revenue", 
     legend_title="Legend",
     template = 'ggplot2',
@@ -168,7 +168,7 @@ def scenario_adstock(selected_key):
                     text = 'coefficient'
                     )
     figure_2.update_layout(
-        title="Coefficeint Values for adstock = " + str(selected_key),
+        title="Coefficeint Values for adstock = " + str(selected_key) + "<sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>",
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
