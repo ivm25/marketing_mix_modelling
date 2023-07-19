@@ -89,7 +89,7 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(html.P("Select a variable:")), dbc.Col(html.P("Select an adstock scenario:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown',
-        options=list(correlation_df.columns),
+        options=list(correlation_df.columns[0:6]),
         value=correlation_df.columns[4],
          style={"width": "600px"},
         
