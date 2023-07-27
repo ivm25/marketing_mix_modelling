@@ -106,7 +106,7 @@ app.layout = html.Div(children=[navbar,
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
-    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap")),
+    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'})),
              dbc.Col(dcc.Graph(id = "table_2"))])
 ])
 
