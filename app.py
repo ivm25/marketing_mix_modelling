@@ -200,7 +200,7 @@ def heatmap_table(selected_col):
    if selected_col is None:
         selected_col = correlation_df.columns[1]
 
-   heatmap = px.density_heatmap(data=correlation_df,
+   heatmap = px.density_heatmap(correlation_df,
                                  x = correlation_df[selected_col],
                                  y = 'revenue',
                                  marginal_x= 'box',
