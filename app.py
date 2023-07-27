@@ -106,7 +106,7 @@ app.layout = html.Div(children=[navbar,
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
-    dbc.Row([dbc.Col(dcc.Graph(id = "table_1")),
+    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap")),
              dbc.Col(dcc.Graph(id = "table_2"))])
 ])
 
@@ -185,35 +185,64 @@ def scenario_adstock(selected_key):
     return figure_2
 
 
+# @app.callback(
+#     Output(component_id="table_1", component_property="figure"),
+#     Input(component_id="dropdown_adstck", component_property="value")
+# )
+
 @app.callback(
-    Output(component_id="table_1", component_property="figure"),
-    Input(component_id="dropdown_adstck", component_property="value")
+    Output(component_id="heatmap", component_property="figure"),
+    Input(component_id="dropdown", component_property="value")
 )
 
-def rsquared_table(selected_key):
+def heatmap_table(selected_col):
     
-    if selected_key is None:
-        selected_key = 0.1791267574878015
-    selected_model = ols_models.get(selected_key)
+   if selected_col is None:
+        selected_col = correlation_df.columns[1]
 
-    table = go.Figure(data=[go.Table(
-            header=dict(values=list(selected_model.summary().tables[0].data[0]),
-                    fill = dict(color = font_colour),
-                    font = dict(color = 'rgb(255,255,255)')),
-            cells=dict(values=list(zip(*selected_model.summary().tables[0].data[1:])),
-                fill = dict(color='rgb(245,245,245)'),
-                font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
-    )])
+   heatmap = px.density_heatmap(data=correlation_df,
+                                 x = correlation_df[selected_col],
+                                 y = 'revenue',
+                                 marginal_x= 'box',
+                                 marginal_y= 'box'
+                                 
+    )
 
-    table.update_layout(template = 'ggplot2',
-                        title = "Multiple Linear Regression output for adstock =" + str(round(selected_key,2)),
+   heatmap.update_layout(template = 'ggplot2',
+                        title = "Correlation matrix",
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
                         ),
                         title_font_color = "RebeccaPurple"
                         )
-    return table
+   return heatmap
+
+
+# def rsquared_table(selected_key):
+    
+#     if selected_key is None:
+#         selected_key = 0.1791267574878015
+#     selected_model = ols_models.get(selected_key)
+
+#     table = go.Figure(data=[go.Table(
+#             header=dict(values=list(selected_model.summary().tables[0].data[0]),
+#                     fill = dict(color = font_colour),
+#                     font = dict(color = 'rgb(255,255,255)')),
+#             cells=dict(values=list(zip(*selected_model.summary().tables[0].data[1:])),
+#                 fill = dict(color='rgb(245,245,245)'),
+#                 font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
+#     )])
+
+#     table.update_layout(template = 'ggplot2',
+#                         title = "Multiple Linear Regression output for adstock =" + str(round(selected_key,2)),
+#                         font=dict(
+#                         family="Courier New, monospace",
+#                         size=14,
+#                         ),
+#                         title_font_color = "RebeccaPurple"
+#                         )
+#     return table
 
 @app.callback(
     Output(component_id="table_2", component_property="figure"),
