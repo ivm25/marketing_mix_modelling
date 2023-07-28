@@ -45,7 +45,8 @@ correlation_df = simulated_data_df\
 external_stylesheets = [dbc.themes.ZEPHYR]
 
 app = Dash(__name__,
-           external_stylesheets=external_stylesheets)
+           external_stylesheets=external_stylesheets,
+           meta_tags= [{'name': 'viewport', 'content': 'width=device-width, initial-scale=1'}])
 
 server = app.server
 
