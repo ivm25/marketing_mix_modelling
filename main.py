@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 
 import plotly.express as px
+import plotly.graph_objects as go
 import seaborn as sns
 
 from sklearn.linear_model import LinearRegression
@@ -16,8 +17,8 @@ import statsmodels.api as sm
 
 from models.models import model_summary_to_dataframe
 from models.models import adstock
-from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot
-
+from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot, marginal_plots, heatmaps, seasonality_charts
+from data_prep.data_prep import time_series_prep
 
 simulated_data_df = pd.read_csv("data/de_simulated_data.csv")
 
@@ -56,9 +57,20 @@ time_series_chart(simulated_data_df)
 
 visualise_media_spend(media_spend_df)
                     
-# Visualise Correlations ----
-corelation_plot(correlation_df)
 
+# Visualise statistical plots
+
+marginal_plots(correlation_df)
+
+# Visualise correlations
+
+heatmaps(correlation_df.corr())
+
+# visualise time series decomposition
+
+seasonal_data = time_series_prep(simulated_data_df)
+f = seasonality_charts(seasonal_data)
+f.show()
 
 # STEP 2.0 MODELING WITH ADSTOCK ----
 
@@ -154,68 +166,6 @@ adstock_grid_df = pd.DataFrame(dict(
 
 
 # creating adstock search model
-
-def adstock_search(df, 
-                   grid, 
-                   verbose = False):
-    
-    best_model = dict(
-        model = None,
-        params = None,
-        score = None,
-    )
-    
-    for tv, ooh, prnt, search, facebook in zip(grid.adstock_tv_s,
-                                                grid.adstock_facebook_s,
-                                                grid.adstock_ooh_s,
-                                                grid.adstock_print_s,
-                                                grid.adstock_search_s):
-        adstock_tv_s_new = adstock(df.tv_s,tv)
-        adstock_ooh_s_new = adstock(df.ooh_s, ooh)
-        adstock_print_s_new = adstock(df.print_s, prnt)
-        adstock_facebook_s_new = adstock(df.facebook_s, facebook)
-        adstock_search_s_new = adstock(df.search_s, search)
-        
-        x_new = pd.concat([adstock_tv_s_new, 
-                       adstock_ooh_s_new, 
-                       adstock_print_s_new,
-                       adstock_search_s_new,
-                       adstock_facebook_s_new,
-                       df.competitor_sales_b,
-                       pd.get_dummies(df.date_month)],
-                       axis = 1)
-        
-        y_new = df.revenue
-        
-        x_adstock_train, x_adstock_test, y_adstock_train, y_adstock_test = train_test_split(x_new,
-                                                            y_new,
-                                                            random_state = 0)
-        
-        new_model = Pipeline([('lm2', LinearRegression())])
-        
-        new_model.fit(x_adstock_train, y_adstock_train)
-        
-        score = new_model.score(x_adstock_test, y_adstock_test)
-        
-        if best_model['model'] is None or score > best_model['score']:
-            best_model['model'] = new_model,
-            best_model['params'] = dict(tv = tv,
-                                        ooh = ooh,
-                                        prnt = prnt,
-                                        search = search,
-                                        facebook = facebook)
-            best_model['score'] = score
-            
-            if verbose:
-                print("New Best Model:")
-                print(best_model)
-                print("\n")
-                
-    if verbose:
-        print("Done")
-    
-    return best_model    
-
 
 best_model = adstock_search(correlation_df[0:100],
                             adstock_grid_df, 
