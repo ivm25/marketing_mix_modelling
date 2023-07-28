@@ -10,6 +10,8 @@ from dash import Dash
 import dash_daq as daq
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
 import pandas as pd
 import numpy as np
 import pathlib
@@ -26,7 +28,7 @@ import statsmodels.api as sm
 from models.models import model_summary_to_dataframe
 from models.models import adstock
 from visualisations.charts import time_series_chart, visualise_media_spend, corelation_plot
-from data_prep.data_prep import generate_grid, adstock_model, extract_coefficients
+from data_prep.data_prep import generate_grid, adstock_model, extract_coefficients, time_series_prep
 
 # Data load
 
@@ -75,6 +77,8 @@ ols_models = adstock_model(correlation_df[0:100],
 
 key_coefficients_dict = extract_coefficients(model_dict = ols_models)
 
+time_series_dict = time_series_prep(simulated_data_df)
+
 # Create a table with the model summary
 
 df = correlation_df
@@ -106,8 +110,25 @@ app.layout = html.Div(children=[navbar,
     ))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
+    dbc.Row([dbc.Col(dcc.Dropdown(
+        id='dropdown_heatmap',
+        options=list(correlation_df.columns[0:6]),
+        value=correlation_df.columns[4],
+         style={"width": "600px"},
+        
+       
+       
+    )),dbc.Col(dcc.Dropdown(
+        id='time_series_dropdown',
+        options=list(time_series_dict.keys()),
+        value=4,
+         style={"width": "600px"},
+        
+       
+       
+    ))]),
     dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'})),
-             dbc.Col(dcc.Graph(id = "table_2"))])
+             dbc.Col(dcc.Graph(id = "time_series", style = {'display': 'inline-block'}))])
 ])
 
 # Writing Callbacks
@@ -185,14 +206,11 @@ def scenario_adstock(selected_key):
     return figure_2
 
 
-# @app.callback(
-#     Output(component_id="table_1", component_property="figure"),
-#     Input(component_id="dropdown_adstck", component_property="value")
-# )
+
 
 @app.callback(
     Output(component_id="heatmap", component_property="figure"),
-    Input(component_id="dropdown", component_property="value")
+    Input(component_id="dropdown_heatmap", component_property="value")
 )
 
 def heatmap_table(selected_col):
@@ -218,6 +236,56 @@ def heatmap_table(selected_col):
                         )
    return heatmap
 
+@app.callback(
+    Output(component_id="time_series", component_property="figure"),
+    Input(component_id="time_series_dropdown", component_property="value")
+)
+
+
+def seasonality_charts(time_series_data_key):
+    if time_series_data_key is None:
+        time_series_data_key = 4
+        
+    decomposed_data = time_series_dict.get(time_series_data_key)
+    
+    return (make_subplots(
+            rows = 4,
+            cols = 1,
+            subplot_titles=["Observed",
+                            "Trend",
+                            "Seasonal",
+                            "Residuals"]
+           )
+           .add_trace(
+               go.Scatter(x = decomposed_data.observed.index,
+                          y = decomposed_data.observed),
+               row = 1,
+               col = 1,
+           ).add_trace(
+               go.Scatter(x = decomposed_data.trend.index,
+                          y = decomposed_data.trend),
+               row = 2,
+               col = 1,
+           ).add_trace(
+               go.Scatter(x = decomposed_data.seasonal.index,
+                          y = decomposed_data.seasonal),
+               row = 3,
+               col = 1,
+           ).add_trace(
+               go.Scatter(x = decomposed_data.resid.index,
+                          y = decomposed_data.resid),
+               row = 4,
+               col = 1,
+           )
+    )
+    
+
+
+
+# @app.callback(
+#     Output(component_id="table_1", component_property="figure"),
+#     Input(component_id="dropdown_adstck", component_property="value")
+# )
 
 # def rsquared_table(selected_key):
     
@@ -244,35 +312,40 @@ def heatmap_table(selected_col):
 #                         )
 #     return table
 
-@app.callback(
-    Output(component_id="table_2", component_property="figure"),
-    Input(component_id="dropdown_adstck", component_property="value")
-)
 
-def significance_values(selected_key):
-    
-    if selected_key is None:
-        selected_key = 0.1791267574878015
-    selected_model = ols_models.get(selected_key)
-    
-    table_2 = go.Figure(data=[go.Table(
-        header=dict(values=list(selected_model.summary().tables[1].data[0]),
-                    fill = dict(color = font_colour),
-                    font = dict(color = 'rgb(255,255,255)')),
-        cells=dict(values=list(zip(*selected_model.summary().tables[1].data[1:])),
-                fill = dict(color='rgb(245,245,245)'),
-                font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
-    )])
 
-    table_2.update_layout(template = 'ggplot2',
-                        title = "Signifiance values for adstock =" + str(round(selected_key,2)),
-                        font=dict(
-                        family="Courier New, monospace",
-                        size=14,
-                        ),
-                        title_font_color = "RebeccaPurple"
-                        )
-    return table_2
+
+
+
+# @app.callback(
+#     Output(component_id="table_2", component_property="figure"),
+#     Input(component_id="dropdown_adstck", component_property="value")
+# )
+
+# def significance_values(selected_key):
+    
+#     if selected_key is None:
+#         selected_key = 0.1791267574878015
+#     selected_model = ols_models.get(selected_key)
+    
+#     table_2 = go.Figure(data=[go.Table(
+#         header=dict(values=list(selected_model.summary().tables[1].data[0]),
+#                     fill = dict(color = font_colour),
+#                     font = dict(color = 'rgb(255,255,255)')),
+#         cells=dict(values=list(zip(*selected_model.summary().tables[1].data[1:])),
+#                 fill = dict(color='rgb(245,245,245)'),
+#                 font= dict(family="Courier New, monospace", size=14, color='rgb(0,0,0)'))
+#     )])
+
+#     table_2.update_layout(template = 'ggplot2',
+#                         title = "Signifiance values for adstock =" + str(round(selected_key,2)),
+#                         font=dict(
+#                         family="Courier New, monospace",
+#                         size=14,
+#                         ),
+#                         title_font_color = "RebeccaPurple"
+#                         )
+#     return table_2
 
 
 if __name__ == '__main__':
