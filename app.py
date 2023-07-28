@@ -104,10 +104,10 @@ app.layout = html.Div(children=[navbar,
        
        
     ))]),
-    dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12)),
-    dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12))]),
-    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12)),
-             dbc.Col(dcc.Graph(id = "table_2", xs = 3, sm = 6, md = 8, lg = 10, xl =12))])
+    dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
+    dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
+    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'})),
+             dbc.Col(dcc.Graph(id = "table_2"))])
 ])
 
 # Writing Callbacks
