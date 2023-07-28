@@ -45,8 +45,7 @@ correlation_df = simulated_data_df\
 external_stylesheets = [dbc.themes.ZEPHYR]
 
 app = Dash(__name__,
-           external_stylesheets=external_stylesheets,
-           meta_tags= [{'name': 'viewport', 'content': 'width=device-width, initial-scale=1'}])
+           external_stylesheets=external_stylesheets)
 
 server = app.server
 
@@ -105,10 +104,10 @@ app.layout = html.Div(children=[navbar,
        
        
     ))]),
-    dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
-    dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
-    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'})),
-             dbc.Col(dcc.Graph(id = "table_2"))])
+    dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12)),
+    dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12))]),
+    dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'}, xs = 3, sm = 6, md = 8, lg = 10, xl =12)),
+             dbc.Col(dcc.Graph(id = "table_2", xs = 3, sm = 6, md = 8, lg = 10, xl =12))])
 ])
 
 # Writing Callbacks
