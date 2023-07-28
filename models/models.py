@@ -16,19 +16,6 @@ import statsmodels.api as sm
 import pathlib
 from joblib import load
 import json
-# PATHS
-
-# BASE_PATH =pathlib.Path(__file__).parent.resolve()
-
-# ART_PATH = BASE_PATH.joinpath("artefacts").resolve()
-
-# # ARTEFACTS
-
-# best_model = load(ART_PATH.joinpath("best_model"))
-
-# X_Train = load(ART_PATH.joinpath("X_train"))
-
-# media_spend_df = load(ART_PATH.joinpath("media_spend_df"))
 
 
 
