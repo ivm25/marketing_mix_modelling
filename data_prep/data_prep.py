@@ -10,6 +10,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import r2_score, mean_absolute_error
 import statsmodels.api as sm
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 
 from models.models import adstock
@@ -110,5 +111,22 @@ def extract_coefficients(model_dict = None):
 
 
 
+def time_series_prep(df):
+    d_res_dict = {}
+    
+    for p in range(1,12):
+        
+        modified_df = df[["date","revenue"]]
+        modified_df = modified_df.set_index("date")
+        decomposed_result = seasonal_decompose(modified_df, model = "additive",
+                                            period = p)
+        if p not in d_res_dict:
+            d_res_dict[p] = decomposed_result
+    
+    return d_res_dict
 
+
+
+
+    
 
