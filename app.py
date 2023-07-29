@@ -284,8 +284,8 @@ def seasonality_charts(time_series_data_key):
                         size=14,
                         ),
                         title_font_color = "RebeccaPurple",
-                        showlegend = False,
-                        vertical_spacing = 0.40
+                        showlegend = False
+                        
                         )
 
     
