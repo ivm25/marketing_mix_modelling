@@ -283,7 +283,9 @@ def seasonality_charts(time_series_data_key):
                         family="Courier New, monospace",
                         size=14,
                         ),
-                        title_font_color = "RebeccaPurple"
+                        title_font_color = "RebeccaPurple",
+                        showlegend = False,
+                        vertical_spacing = 0.40
                         )
 
     
