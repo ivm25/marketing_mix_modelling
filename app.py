@@ -248,36 +248,47 @@ def seasonality_charts(time_series_data_key):
         
     decomposed_data = time_series_dict.get(time_series_data_key)
     
-    return (make_subplots(
-            rows = 4,
-            cols = 1,
-            subplot_titles=["Observed",
-                            "Trend",
-                            "Seasonal",
-                            "Residuals"]
-           )
-           .add_trace(
-               go.Scatter(x = decomposed_data.observed.index,
-                          y = decomposed_data.observed),
-               row = 1,
-               col = 1,
-           ).add_trace(
-               go.Scatter(x = decomposed_data.trend.index,
-                          y = decomposed_data.trend),
-               row = 2,
-               col = 1,
-           ).add_trace(
-               go.Scatter(x = decomposed_data.seasonal.index,
-                          y = decomposed_data.seasonal),
-               row = 3,
-               col = 1,
-           ).add_trace(
-               go.Scatter(x = decomposed_data.resid.index,
-                          y = decomposed_data.resid),
-               row = 4,
-               col = 1,
-           )
+    time_series_fig = make_subplots(
+    rows = 4,
+    cols = 1,
+    subplot_titles=["Total Revenue",
+                    "Overall Trend",
+                    "Revenue due to Seasonal Changes",
+                    "Revenue due to Marketing Channels"]
+    ).add_trace(
+        go.Scatter(x = decomposed_data.observed.index,
+                    y = decomposed_data.observed),
+        row = 1,
+        col = 1,
+    ).add_trace(
+        go.Scatter(x = decomposed_data.trend.index,
+                    y = decomposed_data.trend),
+        row = 2,
+        col = 1,
+    ).add_trace(
+        go.Scatter(x = decomposed_data.seasonal.index,
+                    y = decomposed_data.seasonal),
+        row = 3,
+        col = 1,
+    ).add_trace(
+        go.Scatter(x = decomposed_data.resid.index,
+                    y = decomposed_data.resid),
+        row = 4,
+        col = 1,
     )
+    
+    time_series_fig.update_layout(template = 'ggplot2',
+                        title = "Impact of Marketing and Non Marketing media on Revenue",
+                        font=dict(
+                        family="Courier New, monospace",
+                        size=14,
+                        ),
+                        title_font_color = "RebeccaPurple"
+                        )
+
+    
+    
+    return time_series_fig
     
 
 
