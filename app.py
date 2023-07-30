@@ -221,8 +221,8 @@ def heatmap_table(selected_col):
    heatmap = px.density_heatmap(correlation_df,
                                  x = correlation_df[selected_col],
                                  y = 'revenue',
-                                 marginal_x= 'box',
-                                 marginal_y= 'box'
+                                 marginal_x= 'violin',
+                                 marginal_y= 'violin'
                                  
     )
 
@@ -253,7 +253,7 @@ def seasonality_charts(time_series_data_key):
     cols = 1,
     subplot_titles=["Total Revenue",
                     "Overall Trend",
-                    "Revenue due to Seasonal Changes",
+                    "Seasonality",
                     "Revenue due to Marketing Channels"],
     vertical_spacing=0.20
     ).add_trace(
@@ -272,7 +272,7 @@ def seasonality_charts(time_series_data_key):
         row = 3,
         col = 1,
     ).add_trace(
-        go.Scatter(x = decomposed_data.resid.index,
+        go.bar(x = decomposed_data.resid.index,
                     y = decomposed_data.resid,
                      ),
         row = 4,
@@ -283,7 +283,7 @@ def seasonality_charts(time_series_data_key):
                         title = "Impact of Marketing and Non Marketing Media on Revenue",
                         font=dict(
                         family="Courier New, monospace",
-                        size=14,
+                        size=12,
                         ),
                         title_font_color = "RebeccaPurple",
                         showlegend = False
