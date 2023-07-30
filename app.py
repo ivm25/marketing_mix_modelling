@@ -220,7 +220,7 @@ def heatmap_table(selected_col):
 
    heatmap = px.density_heatmap(correlation_df,
                                  x = correlation_df[selected_col],
-                                 y = 'Revenue',
+                                 y = 'revenue',
                                  marginal_x= 'box',
                                  marginal_y= 'box'
                                  
@@ -255,7 +255,7 @@ def seasonality_charts(time_series_data_key):
                     "Overall Trend",
                     "Revenue due to Seasonal Changes",
                     "Revenue due to Marketing Channels"],
-    vertical_spacing=0.50
+    vertical_spacing=0.20
     ).add_trace(
         go.Scatter(x = decomposed_data.observed.index,
                     y = decomposed_data.observed),
