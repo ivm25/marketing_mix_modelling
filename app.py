@@ -231,6 +231,7 @@ def heatmap_table(selected_col):
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
+                        color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple"
                         )
@@ -284,6 +285,7 @@ def seasonality_charts(time_series_data_key):
                         font=dict(
                         family="Courier New, monospace",
                         size=12,
+                        color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple",
                         showlegend = False
