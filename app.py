@@ -222,7 +222,9 @@ def heatmap_table(selected_col):
                                  x = correlation_df[selected_col],
                                  y = 'revenue',
                                  marginal_x= 'violin',
-                                 marginal_y= 'violin'
+                                 marginal_y= 'violin',
+                                 color_continuous_scale='Viridis',
+                                 text_auto=True
                                  
     )
 
@@ -231,7 +233,7 @@ def heatmap_table(selected_col):
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
-                        colorscale='YlGnBu'
+                        # color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple"
                         )
