@@ -282,7 +282,7 @@ def seasonality_charts(time_series_data_key):
         row = 3,
         col = 1,
     ).add_trace(
-        go.Scatter(x = decomposed_data.resid.index,
+        px.bar(decomposed_data, x = decomposed_data.resid.index,
                     y = decomposed_data.resid,
                      ),
         row = 4,
