@@ -227,11 +227,11 @@ def heatmap_table(selected_col):
     )
 
    heatmap.update_layout(template = 'ggplot2',
-                        title = "Distribution of points",
+                        title = "Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand quartile distributions</sup>",
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
-                        color="RebeccaPurple"
+                        colorscale='YlGnBu'
                         ),
                         title_font_color = "RebeccaPurple"
                         )
