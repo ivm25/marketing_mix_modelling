@@ -235,6 +235,10 @@ def heatmap_table(selected_col):
                         ),
                         title_font_color = "RebeccaPurple"
                         )
+   
+   heatmap.update_layout(yaxis_tickprefix = '$', yaxis_tickformat = ',.')
+   heatmap.update_layout(xaxis_tickprefix = '$', xaxis_tickformat = ',.')
+   
    return heatmap
 
 @app.callback(
