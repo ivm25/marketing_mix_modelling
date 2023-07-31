@@ -265,17 +265,20 @@ def seasonality_charts(time_series_data_key):
     vertical_spacing=0.20
     ).add_trace(
         go.Scatter(x = decomposed_data.observed.index,
-                    y = decomposed_data.observed),
+                    y = decomposed_data.observed,
+                    fill = 'tozeroy'),
         row = 1,
         col = 1,
     ).add_trace(
         go.Scatter(x = decomposed_data.trend.index,
-                    y = decomposed_data.trend),
+                    y = decomposed_data.trend,
+                    ),
         row = 2,
         col = 1,
     ).add_trace(
         go.Scatter(x = decomposed_data.seasonal.index,
-                    y = decomposed_data.seasonal),
+                    y = decomposed_data.seasonal,
+                    fill = 'tozeroy'),
         row = 3,
         col = 1,
     ).add_trace(
