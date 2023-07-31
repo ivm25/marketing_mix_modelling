@@ -223,7 +223,7 @@ def heatmap_table(selected_col):
                                  y = 'revenue',
                                  marginal_x= 'violin',
                                  marginal_y= 'violin',
-                                 color_continuous_scale='Viridis',
+                                 color="RebeccaPurple",
                                  text_auto=True
                                  
     )
