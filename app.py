@@ -223,7 +223,7 @@ def heatmap_table(selected_col):
                                  y = 'revenue',
                                  marginal_x= 'violin',
                                  marginal_y= 'violin',
-                                 color="RebeccaPurple",
+                                 
                                  text_auto=True
                                  
     )
@@ -233,7 +233,7 @@ def heatmap_table(selected_col):
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
-                        # color="RebeccaPurple"
+                        color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple"
                         )
