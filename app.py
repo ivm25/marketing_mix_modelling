@@ -108,6 +108,7 @@ app.layout = html.Div(children=[navbar,
        
        
     ))]),
+    dbc.Row([dbc.Col(html.P("Select a variable to understand distribution:")), dbc.Col(html.P("Select a time period to understand seasonality:"))]),
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
@@ -290,7 +291,7 @@ def seasonality_charts(time_series_data_key):
     )
     
     time_series_fig.update_layout(template = 'ggplot2',
-                        title = "Impact of Marketing and Non Marketing Media on Revenue",
+                        title = "Impact of Marketing and Non Marketing Media on Revenue<br><sup>Time series decomposition reveals highly seasonal data</sup>",
                         font=dict(
                         family="Courier New, monospace",
                         size=12,
