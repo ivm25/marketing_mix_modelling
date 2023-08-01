@@ -108,9 +108,10 @@ app.layout = html.Div(children=[navbar,
        
        
     ))]),
-    dbc.Row([dbc.Col(html.P("Select a variable to understand distribution:")), dbc.Col(html.P("Select a time period to understand seasonality:"))]),
+   
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'})),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}))]),
+    dbc.Row([dbc.Col(html.P("Select a variable to understand data distribution:")), dbc.Col(html.P("Select a time period to understand seasonality:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown_heatmap',
         options=list(correlation_df.columns[0:6]),
