@@ -265,7 +265,7 @@ def seasonality_charts(time_series_data_key):
                     "Seasonality",
                     "Revenue due to Marketing Channels"],
     shared_xaxes=True,
-    vertical_spacing=0.20
+    vertical_spacing=0.10
     ).add_trace(
         go.Scatter(x = decomposed_data.observed.index,
                     y = decomposed_data.observed,
