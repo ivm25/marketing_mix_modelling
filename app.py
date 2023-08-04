@@ -123,7 +123,7 @@ app.layout = html.Div(children=[navbar,
     )),dbc.Col(dcc.Dropdown(
         id='time_series_dropdown',
         options=list(time_series_dict.keys()),
-        value=4,
+        value=11,
          style={"width": "600px"},
         
        
@@ -231,7 +231,7 @@ def heatmap_table(selected_col):
     )
 
    heatmap.update_layout(template = 'ggplot2',
-                        title = "Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand quartile distributions</sup>",
+                        title = "Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand outliers and quartiles</sup>",
                         font=dict(
                         family="Courier New, monospace",
                         size=14,
@@ -253,7 +253,7 @@ def heatmap_table(selected_col):
 
 def seasonality_charts(time_series_data_key):
     if time_series_data_key is None:
-        time_series_data_key = 4
+        time_series_data_key = 11
         
     decomposed_data = time_series_dict.get(time_series_data_key)
     
@@ -293,7 +293,7 @@ def seasonality_charts(time_series_data_key):
     )
     
     time_series_fig.update_layout(template = 'ggplot2',
-                        title = "Impact of Marketing and Non Marketing Media on Revenue<br><sup>Time series decomposition reveals highly seasonal data</sup>",
+                        title = "Impact of Marketing and Non Marketing Channels on Revenue<br><sup><b>Time series decomposition</b> reveals highly seasonal data</sup>",
                         font=dict(
                         family="Courier New, monospace",
                         size=12,
