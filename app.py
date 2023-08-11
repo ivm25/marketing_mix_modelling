@@ -99,7 +99,7 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    ),lg=6, md=12),dbc.Col(dcc.Dropdown(
+    )),dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
         options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
@@ -107,7 +107,7 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    ),lg=6, md=12)]),
+    ))]),
    
     dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'}),lg=6, md=12),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}),lg=6, md=12)]),
@@ -120,7 +120,7 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    ),lg=6, md=12),dbc.Col(dcc.Dropdown(
+    )),dbc.Col(dcc.Dropdown(
         id='time_series_dropdown',
         options=list(time_series_dict.keys()),
         value=11,
@@ -128,7 +128,7 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    ),lg=6, md=12)]),
+    ))]),
     dbc.Row([dbc.Col(dcc.Graph(id = "heatmap", style = {'display': 'inline-block'}),lg=6, md=12),
              dbc.Col(dcc.Graph(id = "time_series", style = {'display': 'inline-block'}),lg=6, md=12)])
 ])
