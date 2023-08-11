@@ -68,8 +68,9 @@ heatmaps(correlation_df.corr())
 
 # visualise time series decomposition
 
-seasonal_data = time_series_prep(simulated_data_df)
-f = seasonality_charts(seasonal_data)
+seasonal_data_dict = time_series_prep(simulated_data_df)
+f = seasonal_data_dict[1]
+f = seasonality_charts(seasonal_data_dict[4])
 f.show()
 
 # STEP 2.0 MODELING WITH ADSTOCK ----
