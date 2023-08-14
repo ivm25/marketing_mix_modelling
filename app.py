@@ -95,7 +95,7 @@ app.layout = html.Div(children=[navbar,
         id='dropdown',
         options=list(correlation_df.columns[0:6]),
         value=correlation_df.columns[4],
-         style={"width": "600px"},
+         style={'display': 'inline-block'},
         
        
        
@@ -103,7 +103,7 @@ app.layout = html.Div(children=[navbar,
         id='dropdown_adstck',
         options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
-         style={"width": "600px"},
+         style={'display': 'inline-block'},
         
        
        
@@ -116,7 +116,7 @@ app.layout = html.Div(children=[navbar,
         id='dropdown_heatmap',
         options=list(correlation_df.columns[0:6]),
         value=correlation_df.columns[4],
-         style={"width": "600px"},
+         style={'display': 'inline-block'},
         
        
        
@@ -124,7 +124,7 @@ app.layout = html.Div(children=[navbar,
         id='time_series_dropdown',
         options=list(time_series_dict.keys()),
         value=11,
-         style={"width": "600px"},
+         style={'display': 'inline-block'},
         
        
        
