@@ -95,28 +95,28 @@ app.layout = html.Div(children=[navbar,
         id='dropdown',
         options=list(correlation_df.columns[0:6]),
         value=correlation_df.columns[4],
-         style={"width": "400px"},
+         style={"width": "600px"},
         
        
        
-    )),dbc.Col(dcc.Dropdown(
+    )),dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'}),lg=6, md=12, sm = 24)]),
+   
+    dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
         options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
-         style={"width": "400px"},
+         style={"width": "600px"},
         
        
        
-    ))]),
-   
-    dbc.Row([dbc.Col(dcc.Graph(id="graph", style = {'display': 'inline-block'}),lg=6, md=12, sm = 24),
+    )),
     dbc.Col(dcc.Graph(id = "graph_2", style ={'display': 'inline-block'}),lg=6, md=12, sm = 24)]),
     dbc.Row([dbc.Col(html.P("Select a variable to understand data distribution:")), dbc.Col(html.P("Select a time period to understand seasonality:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown_heatmap',
         options=list(correlation_df.columns[0:6]),
         value=correlation_df.columns[4],
-         style={"width": "400px"},
+         style={"width": "600px"},
         
        
        
@@ -124,7 +124,7 @@ app.layout = html.Div(children=[navbar,
         id='time_series_dropdown',
         options=list(time_series_dict.keys()),
         value=11,
-         style={"width": "400px"},
+         style={"width": "600px"},
         
        
        
