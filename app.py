@@ -175,7 +175,7 @@ def mod(selected_col):
     template = 'ggplot2',
     font=dict(
         family="Courier New, monospace",
-        size=14,
+        size=10,
         color="RebeccaPurple"
     )  
 )
@@ -210,7 +210,7 @@ def scenario_adstock(selected_key):
         legend_title="Legend",
         font=dict(
             family="Courier New, monospace",
-            size=14,
+            size=10,
             color="RebeccaPurple"
         )
     )
@@ -246,7 +246,7 @@ def heatmap_table(selected_col):
                         title = "Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand outliers and quartiles</sup>",
                         font=dict(
                         family="Courier New, monospace",
-                        size=14,
+                        size=10,
                         color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple"
@@ -308,7 +308,7 @@ def seasonality_charts(time_series_data_key):
                         title = "Impact of Marketing and Non Marketing Channels on Revenue<br><sup><b>Time series decomposition</b> reveals highly seasonal data</sup>",
                         font=dict(
                         family="Courier New, monospace",
-                        size=12,
+                        size=10,
                         color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple",
