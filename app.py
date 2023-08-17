@@ -112,11 +112,11 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Graph(id="graph", 
                             #    style = {'display': 'inline-block'}
                                ),
-                              lg=3, md=6, sm = 12),
+                              lg=6, md=12, sm = 24),
     dbc.Col(dcc.Graph(id = "graph_2", 
                     #   style ={'display': 'inline-block'}
                       ),
-                      lg=3, md=6, sm = 12)]),
+                      lg=6, md=12, sm = 24)]),
     dbc.Row([dbc.Col(html.P("Select a variable to understand data distribution:")), dbc.Col(html.P("Select a time period to understand seasonality:"))]),
     dbc.Row([dbc.Col(dcc.Dropdown(
         id='dropdown_heatmap',
@@ -138,11 +138,11 @@ app.layout = html.Div(children=[navbar,
     dbc.Row([dbc.Col(dcc.Graph(id = "heatmap",
                             #    style = {'display': 'inline-block'}
                                ),
-                               lg=3, md=6, sm = 12),
+                               lg=6, md=12, sm = 24),
              dbc.Col(dcc.Graph(id = "time_series",
                             #    style = {'display': 'inline-block'}
                                ),
-                               lg=3, md=6, sm = 12)])
+                               lg=6, md=12, sm = 24)])
 ])
 
 # Writing Callbacks
@@ -175,7 +175,7 @@ def mod(selected_col):
     template = 'ggplot2',
     font=dict(
         family="Courier New, monospace",
-        size=16,
+        size=14,
         color="RebeccaPurple"
     )  
 )
@@ -210,7 +210,7 @@ def scenario_adstock(selected_key):
         legend_title="Legend",
         font=dict(
             family="Courier New, monospace",
-            size=16,
+            size=14,
             color="RebeccaPurple"
         )
     )
