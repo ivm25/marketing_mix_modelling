@@ -172,7 +172,7 @@ def mod(selected_col):
                                   x=0.5,
                                   font=dict(
                                     family="Courier New, monospace",
-                                    size=12,
+                                    size=14,
             
                                             )
                                              ),
@@ -215,7 +215,7 @@ def scenario_adstock(selected_key):
                                   x=0.5,
                                   font=dict(
                                     family="Courier New, monospace",
-                                    size=12,
+                                    size=14,
             
                                             )
                                              ),
@@ -264,7 +264,7 @@ def heatmap_table(selected_col):
                                   x=0.5,
                                   font=dict(
                                     family="Courier New, monospace",
-                                    size=12,
+                                    size=14,
             
                                             )
                                              ),
