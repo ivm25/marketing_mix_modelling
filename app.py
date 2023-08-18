@@ -99,12 +99,7 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    )),dbc.Col(dcc.Graph(id="graph", 
-                            #    style = {'display': 'inline-block'}
-                               ),
-                              lg=6, md=12, sm = 18)]),
-   
-    dbc.Row([dbc.Col(dcc.Dropdown(
+    )),dbc.Col(dcc.Dropdown(
         id='dropdown_adstck',
         options=list(key_coefficients_dict.keys()),
         value=0.1791267574878015,
@@ -112,7 +107,12 @@ app.layout = html.Div(children=[navbar,
         
        
        
-    )),
+    ))]),
+   
+    dbc.Row([dbc.Col(dcc.Graph(id="graph", 
+                            #    style = {'display': 'inline-block'}
+                               ),
+                              lg=6, md=12, sm = 18),
     dbc.Col(dcc.Graph(id = "graph_2", 
                     #   style ={'display': 'inline-block'}
                       ),
@@ -354,6 +354,7 @@ def seasonality_charts(time_series_data_key):
     
     return time_series_fig
     
+
 
 if __name__ == '__main__':
     app.run_server(debug = True)
