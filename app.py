@@ -167,15 +167,23 @@ def mod(selected_col):
                      color = 'revenue')
     
 
-    fig.update_layout(
-    title="Revenue as a function of media spends <br><sup><b>Search Media</b> has the highest R square value</sup>",
+    fig.update_layout(title=dict(
+                                  text='Revenue as a function of media spends <br><sup><b>Search Media</b> has the highest R square value</sup>',
+                                  x=0.5,
+                                  font=dict(
+                                    family="Courier New, monospace",
+                                    size=12,
+            
+                                            )
+                                             ),
+   
     xaxis_title= selected_col + "pends",
     yaxis_title="Revenue", 
     legend_title="Legend",
     template = 'ggplot2',
     font=dict(
         family="Courier New, monospace",
-        size=10,
+        size=16,
         color="RebeccaPurple"
     )  
 )
@@ -202,15 +210,23 @@ def scenario_adstock(selected_key):
                     color = 'coefficient',
                     text = 'coefficient'
                     )
-    figure_2.update_layout(
-        title="Coefficeint Values for the selected adstock<br><sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>",
+    figure_2.update_layout(title=dict(
+                                  text='Coefficeint Values for the selected adstock<br><sup><b>TV and Facebook</b> have the highest ROI for every $ spent</sup>',
+                                  x=0.5,
+                                  font=dict(
+                                    family="Courier New, monospace",
+                                    size=12,
+            
+                                            )
+                                             ),
+       
         # xaxis_title="key variables",
         yaxis_title="coefficients",
         template = 'ggplot2',
         legend_title="Legend",
         font=dict(
             family="Courier New, monospace",
-            size=10,
+            size=16,
             color="RebeccaPurple"
         )
     )
@@ -243,10 +259,19 @@ def heatmap_table(selected_col):
     )
 
    heatmap.update_layout(template = 'ggplot2',
-                        title = "Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand outliers and quartiles</sup>",
+                          title=dict(
+                                  text='Distribution of variables<br><sup>Hover on the <b>violin plots<b> to understand outliers and quartiles</sup>',
+                                  x=0.5,
+                                  font=dict(
+                                    family="Courier New, monospace",
+                                    size=12,
+            
+                                            )
+                                             ),
+                       
                         font=dict(
                         family="Courier New, monospace",
-                        size=10,
+                        size=16,
                         color="RebeccaPurple"
                         ),
                         title_font_color = "RebeccaPurple"
@@ -308,10 +333,9 @@ def seasonality_charts(time_series_data_key):
                                   title=dict(
                                   text='Impact of Marketing and Non Marketing Channels on Revenue<br><sup><b>Time series decomposition</b> reveals highly seasonal data</sup>',
                                   x=0.5,
-                                  y=0.95,
                                   font=dict(
-                                    family="Arial",
-                                    size=10,
+                                    family="Courier New, monospace",
+                                    size=12,
             
                                             )
                                              ),
