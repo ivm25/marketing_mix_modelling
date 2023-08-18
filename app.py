@@ -335,7 +335,7 @@ def seasonality_charts(time_series_data_key):
                                   x=0.5,
                                   font=dict(
                                     family="Courier New, monospace",
-                                    size=12,
+                                    size=10,
             
                                             )
                                              ),
