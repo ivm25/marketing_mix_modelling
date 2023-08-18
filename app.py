@@ -305,16 +305,26 @@ def seasonality_charts(time_series_data_key):
     )
     
     time_series_fig.update_layout(template = 'ggplot2',
-                        title = "Impact of Marketing and Non Marketing Channels on Revenue<br><sup><b>Time series decomposition</b> reveals highly seasonal data</sup>",
-                        font=dict(
-                        family="Courier New, monospace",
-                        size=10,
-                        color="RebeccaPurple"
-                        ),
-                        title_font_color = "RebeccaPurple",
-                        showlegend = False
+                                  title=dict(
+                                  text='Impact of Marketing and Non Marketing Channels on Revenue<br><sup><b>Time series decomposition</b> reveals highly seasonal data</sup>',
+                                  x=0.5,
+                                  y=0.95,
+                                  font=dict(
+                                    family="Arial",
+                                    size=10,
+            
+                                            )
+                                             ),
+                      
+                                    font=dict(
+                                      family="Courier New, monospace",
+                                         size=16,
+                                            color="RebeccaPurple"
+                                             ),
+                                             title_font_color = "RebeccaPurple",
+                                                showlegend = False
                         
-                        )
+                                )
 
     
     
